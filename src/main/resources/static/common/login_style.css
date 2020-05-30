@@ -1,0 +1,50 @@
+.form_container{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 500px;
+    height: 400px;
+    margin: -200px 0 0 -250px;
+}
+.form_header{
+    text-align: center;
+    font-size: 30px;
+    width: 75%;
+    margin: 0 auto;
+}
+.layui-form-item{
+    position: relative;
+    width: 75%;
+    margin: 20px auto ;
+    border: 1px #f2f2f2 solid;
+    background: #fff;
+}
+.from_icon{
+    position: absolute;
+    margin: 10px 0 0 10px;
+}
+.layui-input-block{
+    position: relative;
+    margin-left: 25px;
+}
+.layui-input-block input{
+    border: none;
+}
+
+body{
+    background: #f2f2f2;
+}
+.layui-btn-block button{
+    width: 100%;
+}
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+.from_hr{
+    width: 75%;
+    margin-left: 62px;
+}

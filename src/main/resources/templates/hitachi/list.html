@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../static/layui/css/layui.css">
+    <script src="../../static/jquery-3.4.1/jquery-3.4.1.js"></script>
+    <script src="../../static/layui/layui.js"></script>
+    <title>服务费列表</title>
+    <style>
+        .list_btn{
+            position: relative;
+            margin-left: 110px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="/common/common::head"></div>
+
+    <div th:replace="/common/common::menu"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="layui-form-item" style="margin-top: 15px">
+            <div class="layui-inline">
+                <label class="layui-form-label">合同编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">合同买方</label>
+                <div class="layui-input-inline">
+                    <input type="text" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">使用单位</label>
+                <div class="layui-input-inline">
+                    <input type="text" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">责任人</label>
+                <div class="layui-input-inline">
+                    <input type="text" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline" style="position: relative;margin-top: 10px">
+                <label class="layui-form-label" style="position: relative;margin-top: -10px">寄回总公<br>司日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" autocomplete="off" class="search_date layui-input" id = "date1">
+                </div>
+                <div class="layui-input-inline">
+                    <em style="position: relative;top: 10px">-</em>
+                    <input type="text" autocomplete="off" class="search_date layui-input" id = "date2" style="position: relative;margin:-17px 0 0 15px">
+                </div>
+            </div>
+            <div class="layui-inline" style="position: relative;margin-top: 10px">
+                <label class="layui-form-label" style="position: relative;margin-top: -10px">收到确认<br>书日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" autocomplete="off" class="search_date layui-input">
+                </div>
+                <div class="layui-input-inline">
+                    <em style="position: relative;top: 10px">-</em>
+                    <input type="text" autocomplete="off" class="search_date layui-input" style="position: relative;margin:-17px 0 0 15px">
+                </div>
+            </div>
+
+
+            <div class="list_btn layui-inline" style="position: relative;left: -28px">
+                <button class="layui-btn layuiadmin-btn-list">重置</button>
+                <button class="layui-btn layuiadmin-btn-list">查询</button>
+            </div>
+            <div class="layui-inline"style="position: relative;left: 15px">
+                <button class="layui-btn layuiadmin-btn-list" id="addData">增加</button>
+                <button class="layui-btn layuiadmin-btn-list">删除</button>
+            </div>
+        </div>
+
+        <!-- table -->
+        <div class="layui-form" style="margin:0 15px 0 15px">
+            <table class="layui-table" style="width: 100%">
+                <colgroup>
+                    <col width="7%">
+                    <col width="5%">
+                    <col width="20%">
+                    <col width="8%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+
+                </colgroup>
+                <thead>
+                <tr>
+                    <th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose">全选</th>
+                    <th>序号</th>
+                    <th>公司名称</th>
+                    <th>服务器金额</th>
+                    <th>第一笔支付金额</th>
+                    <th>第一笔支付时间</th>
+                    <th>第二笔支付金额</th>
+                    <th>第二笔支付时间</th>
+                    <th>第三笔支付金额</th>
+                    <th>第三笔支付时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="checkbox" name="" lay-skin="primary"></td>
+                    <td>1</td>
+                    <td>分公司</td>
+                    <td>17000</td>
+                    <td>8500</td>
+                    <td>2007年5月</td>
+                    <td>8500</td>
+                    <td>2007年11月</td>
+                    <td>0.0000</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="" lay-skin="primary"></td>
+                    <td>2</td>
+                    <td>宝龙</td>
+                    <td>17000</td>
+                    <td>8500</td>
+                    <td>2007年5月</td>
+                    <td>8500</td>
+                    <td>2007年11月</td>
+                    <td>0.0000</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="paging" style="position: relative;margin-top: -17px"></div>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+<script>
+    layui.use(['laydate','laypage','form','layer'],function () {
+        var laydate = layui.laydate,laypage = layui.laypage,form=layui.form,layer=layui.layer;
+        lay('.search_date').each(function() {
+            laydate.render({
+                elem: this
+            });
+        });
+
+        laypage.render({
+            elem: 'paging',
+            count: 50,
+            layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+            jump: function(obj){
+                console.log(obj)
+            }
+        });
+
+
+
+
+        //全选
+        form.on('checkbox(allChoose)', function(data){
+            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+
+
+
+    });
+</script>
+
+<script>
+    $(function () {
+        $("#addData").click(function () {
+            layui.layer.open({
+            title : "新增服务费",
+            type : 2,
+            content : "/addServiceFeeBefore",
+            shadeClose: false,
+            shade: 0.5,
+            move:true,
+            area: ['1000px', '550px'],
+
+            })
+        })
+    })
+</script>
+
+</body>
+</html>
