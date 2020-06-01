@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
-    <link rel="stylesheet" href="../static/layui/css/layui.css" th:href="@{/webjars/layui/2.5.6/css/layui.css}" media="all">
-    <script src="../../static/jquery-3.4.1/jquery-3.4.1.js"></script>
-    <title>Title</title>
+    <title>头/侧边栏菜单</title>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
@@ -40,32 +38,8 @@
         </div>
     </div>
 
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">内容主体区域</div>
-    </div>
 
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
-    </div>
 </div>
 
-
-<script>
-
-    $(function(){
-        $("#show_user_menu").on({
-            mouseover : function(){
-                $("span").attr("class","layui-nav-more layui-nav-mored");
-                $("dl.layui-nav-child").attr("class","layui-nav-child layui-anim layui-anim-upbit layui-show");
-            } ,
-            mouseout : function(){
-                $("span").attr("class","layui-nav-more");
-                $("dl.layui-nav-child").attr("class","layui-nav-child layui-anim layui-anim-upbit");
-            }
-        }) ;
-    }) ;
-</script>
 </body>
 </html>
