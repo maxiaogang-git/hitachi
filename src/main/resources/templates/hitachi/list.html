@@ -10,7 +10,7 @@
     <style>
         .search_div_two {
             position: relative;
-            margin-top: 15px;
+            margin-top: 30px;
         }
 
         .btn_div_two{
@@ -21,6 +21,52 @@
             position: relative;
             margin-left: 60px;
         }
+
+        .layui-input-block {
+            position: relative;
+            min-height: 36px;
+            width: 100px;
+            margin-top: 15px;
+        }
+
+        .layui-input-block {
+            margin-left: 110px;
+            min-height: 38px;
+            position: relative;
+            left: -35px;
+            top: -10px;
+        }
+
+        .layui-form-label {
+            float: left;
+            display: block;
+            padding: 9px 15px;
+            width: 80px;
+            font-weight: 400;
+            line-height: 20px;
+            text-align: right;
+            position: relative;
+            top: 5px;
+            left: -25px;
+        }
+
+        .layui-layout-admin .layui-body{
+            position: relative;
+            top: 60px;
+            bottom: 44px;
+        }
+
+        .layui-side{
+            position: relative;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 999;
+            width: 200px;
+            overflow-x: hidden;
+        }
+
+
     </style>
 
 </head>
@@ -38,44 +84,56 @@
                 <!--<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>-->
                 <!--<button class="layui-btn" data-type="isAll">验证是否全选</button>-->
             <!--</div>-->
-            <div>
-                搜索ID：
-                <div class="layui-inline">
-                    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+            <form class="layui-form" action="">
+                <div style="height: 30px">
+                    合同编号：
+                    <div class="layui-inline">
+                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+                    </div>
+                    合同买方：
+                    <div class="layui-inline">
+                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+                    </div>
+                    使用单位：
+                    <div class="layui-inline">
+                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+                    </div>
+                    责任人：
+                    <div class="layui-inline">
+                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+                    </div>
+
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">三方合同：</label>
+                        <div class="layui-input-block">
+                            <select name="interest" lay-filter="aihao">
+                                <option value=""></option>
+                                <option value="0">是</option>
+                                <option value="1">否</option>
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
-                搜索ID：
-                <div class="layui-inline">
-                    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
-                </div>
-                搜索ID：
-                <div class="layui-inline">
-                    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
-                </div>
-                搜索ID：
-                <div class="layui-inline">
-                    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
-                </div>
-                搜索ID：
-                <div class="layui-inline">
-                    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
-                </div>
-            </div>
+
+
             <div class="search_div_two">
-                搜索ID：
+                寄总公司日期：
                 <div class="layui-inline">
-                    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+                    <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="send_back_date_one" id="send_back_date_one" autocomplete="off">
                 </div>
-                搜索ID：
+                <em>-</em>
                 <div class="layui-inline">
-                    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+                    <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="send_back_date_two" id="send_back_date_two" autocomplete="off">
                 </div>
-                搜索ID：
+                收到确认书日期
                 <div class="layui-inline">
-                    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+                    <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="receive_date_one" id="receive_date_one" autocomplete="off">
                 </div>
-                搜索ID：
+                <em>-</em>
                 <div class="layui-inline">
-                    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+                    <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="receive_date_two" id="receive_date_two" autocomplete="off">
                 </div>
                 <div class="btn_div_one layui-inline">
                     <button class="layui-btn" data-type="reload">搜索</button>
@@ -86,7 +144,9 @@
                     <button class="layui-btn" data-type="reload">删除</button>
                 </div>
             </div>
-            <table class="layui-hide" id="LAY_table_user" lay-filter="user"></table>
+        </form>
+
+        <table class="layui-hide" id="LAY_table_user" lay-filter="user"></table>
         </div>
     </div>
 </div>
@@ -99,8 +159,11 @@
 </script>
 
 <script>
-    layui.use('table', function(){
+    layui.use(['table','element','laydate'], function(){
         var table = layui.table;
+        var element = layui.element;
+        var laydate = layui.laydate;
+
 
         //方法级渲染
         table.render({
@@ -254,7 +317,7 @@
         }]
             ,id: 'testReload'
             ,page: true
-            ,height: 450
+            ,height: 430
         });
 
         var $ = layui.$, active = {
@@ -321,6 +384,16 @@
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
+
+
+        lay('.layui_date').each(function() {
+            laydate.render({
+                elem: this,
+                trigger: 'click'
+            });
+        });
+
+
     });
 </script>
 
