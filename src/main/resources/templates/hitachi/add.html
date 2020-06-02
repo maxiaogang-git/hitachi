@@ -11,33 +11,18 @@
             padding: 15px 15px;
         }
 
-        .layui-icon {
+       em{
+           position: relative;
+           margin-left: 200px;
+           top: -25px;
+       }
+
+        .jh_date{
             position: relative;
-            top: -25px;
-            left: 170px
+            margin-left: 15px;
         }
 
-        .big_label {
-            position: relative;
-            top: -10px;
-        }
 
-        .jh_date {
-            position: relative;
-            left: 110px;
-            top: -17px
-        }
-
-        .ju_em {
-            position: relative;
-            left: -60px;
-            top: 30px
-        }
-
-        .sd_div {
-            position: relative;
-            top: -35px
-        }
     </style>
 
 </head>
@@ -83,29 +68,25 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="big_label layui-form-label">寄回总公司日期</label>
+            <label class="layui-form-label">寄回总公司日期</label>
             <div class="layui-input-inline">
-                <input type="text" autocomplete="off" class="add_date layui-input">
-                <i class="layui-icon layui-icon-date"></i>
+                <input type="text" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
+                <em class="ju_em">-</em>
             </div>
 
             <div class="jh_date layui-input-inline">
-                <em class="ju_em">--</em>
-                <input type="text" placeholder="请输入合同买方" autocomplete="off" class="add_date layui-input">
-                <i class="layui-icon layui-icon-date"></i>
+                <input type="text" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
             </div>
         </div>
 
-        <div class="sd_div layui-form-item">
-            <label class="big_label layui-form-label">收到确认书日期</label>
+        <div class="layui-form-item">
+            <label class="layui-form-label">收到确认书日期</label>
             <div class="layui-input-inline">
-                <input type="text" placeholder="请输入合同买方" autocomplete="off" class="add_date layui-input">
-                <i class="layui-icon layui-icon-date"></i>
+                <input type="text" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
+                <em class="ju_em">-</em>
             </div>
             <div class="jh_date layui-input-inline">
-                <em class="ju_em">--</em>
-                <input type="text" placeholder="请输入合同买方" autocomplete="off" class="add_date layui-input">
-                <i class="layui-icon layui-icon-date"></i>
+                <input type="text" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
             </div>
 
             <div class="layui-form-item layui-form-text">

@@ -50,20 +50,14 @@
             left: -25px;
         }
 
-        .layui-layout-admin .layui-body{
+        #layui_select{
             position: relative;
-            top: 60px;
-            bottom: 44px;
+            left: 1043px;
+            top: -38px;
         }
 
-        .layui-side{
-            position: relative;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            z-index: 999;
-            width: 200px;
-            overflow-x: hidden;
+        #layui_sel{
+            width: 120px;
         }
 
 
@@ -84,69 +78,69 @@
                 <!--<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>-->
                 <!--<button class="layui-btn" data-type="isAll">验证是否全选</button>-->
             <!--</div>-->
-            <form class="layui-form" action="">
-                <div style="height: 30px">
+                <div style="height:20px;">
                     合同编号：
                     <div class="layui-inline">
-                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+                        <input class="layui-input" name="id"  autocomplete="off">
                     </div>
                     合同买方：
                     <div class="layui-inline">
-                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+                        <input class="layui-input" name="id"  autocomplete="off">
                     </div>
                     使用单位：
                     <div class="layui-inline">
-                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+                        <input class="layui-input" name="id"  autocomplete="off">
                     </div>
                     责任人：
                     <div class="layui-inline">
-                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+                        <input class="layui-input" name="id"  autocomplete="off">
                     </div>
 
 
-                    <div class="layui-inline">
-                        <label class="layui-form-label">三方合同：</label>
-                        <div class="layui-input-block">
-                            <select name="interest" lay-filter="aihao">
-                                <option value=""></option>
-                                <option value="0">是</option>
-                                <option value="1">否</option>
-                            </select>
+                    <div class="layui-form">
+                        <div class="layui-inline" id="layui_select">
+                            三方合同：
+                            <div class="layui-inline" id="layui_sel">
+                                <select name="label">
+                                    <option value="">请选择</option>
+                                    <option value="0">是</option>
+                                    <option value="1">否</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
                 </div>
 
 
-            <div class="search_div_two">
-                寄总公司日期：
-                <div class="layui-inline">
-                    <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="send_back_date_one" id="send_back_date_one" autocomplete="off">
+                <div class="search_div_two">
+                    寄总公司日期：
+                    <div class="layui-inline">
+                        <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="send_back_date_one" id="send_back_date_one" autocomplete="off">
+                    </div>
+                    <em>-</em>
+                    <div class="layui-inline">
+                        <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="send_back_date_two" id="send_back_date_two" autocomplete="off">
+                    </div>
+                    收到确认书日期：
+                    <div class="layui-inline">
+                        <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="receive_date_one" id="receive_date_one" autocomplete="off">
+                    </div>
+                    <em>-</em>
+                    <div class="layui-inline">
+                        <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="receive_date_two" id="receive_date_two" autocomplete="off">
+                    </div>
+                    <div class="btn_div_one layui-inline">
+                        <button class="layui-btn" >搜索</button>
+                        <button class="layui-btn" >重置</button>
+                    </div>
+                    <div class="btn_div_two">
+                        <button class="layui-btn" id="add">增加</button>
+                        <button class="layui-btn" >删除</button>
+                    </div>
                 </div>
-                <em>-</em>
-                <div class="layui-inline">
-                    <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="send_back_date_two" id="send_back_date_two" autocomplete="off">
-                </div>
-                收到确认书日期
-                <div class="layui-inline">
-                    <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="receive_date_one" id="receive_date_one" autocomplete="off">
-                </div>
-                <em>-</em>
-                <div class="layui-inline">
-                    <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="receive_date_two" id="receive_date_two" autocomplete="off">
-                </div>
-                <div class="btn_div_one layui-inline">
-                    <button class="layui-btn" data-type="reload">搜索</button>
-                    <button class="layui-btn" data-type="reload">重置</button>
-                </div>
-                <div class="btn_div_two">
-                    <button class="layui-btn" data-type="reload">增加</button>
-                    <button class="layui-btn" data-type="reload">删除</button>
-                </div>
-            </div>
-        </form>
 
-        <table class="layui-hide" id="LAY_table_user" lay-filter="user"></table>
+            <table class="layui-hide" id="LAY_table_user" lay-filter="user"></table>
         </div>
     </div>
 </div>
@@ -159,32 +153,46 @@
 </script>
 
 <script>
-    layui.use(['table','element','laydate'], function(){
-        var table = layui.table;
-        var element = layui.element;
-        var laydate = layui.laydate;
+
+    $(function () {
+
+        layui.use(['table','element','laydate','layer'], function(){
+            var table = layui.table;
+            var element = layui.element;
+            var laydate = layui.laydate;
+            var layer = layui.layer;
 
 
-        //方法级渲染
-        table.render({
-            elem: '#LAY_table_user'
-//            ,url: '/demo/table/user/'
-            ,cols: [
-                [
-                {checkbox: true, fixed: true}
-                ,{field:'id', title: '序号', width:80, sort: true, fixed: true}
-                ,{field:'companyName', title: '公司名称', width:180}
-                ,{field:'serviceFee', title: '服务费金额', width:120, sort: true}
-                ,{field:'firstPayFee', title: '第一笔支付金额', width:130}
-                ,{field:'firstPayDate', title: '第一笔支付时间',width:150, sort: true}
-                ,{field:'secondPayFee', title: '第二笔支付金额', width:130}
-                ,{field:'secondPayDate', title: '第二笔支付时间', sort: true, width:150}
-                ,{field:'thirdPayFee', title: '第三笔支付金额', width:150}
-                ,{field:'thirdPayDate', title: '第三笔支付时间', sort: true, width:150}
-                ,{field:'wealth', title: '操作', width:200,toolbar: '#barDemo'}
-                ]
-            ],
-        data: [{
+            //方法级渲染
+            table.render({
+                elem: '#LAY_table_user'
+    //            ,url: '/demo/table/user/'
+                ,cols: [
+                    [
+                    {checkbox: true, fixed: true}
+                    ,{field:'id', title: '序号', width:80, sort: true, fixed: true}
+                    ,{field:'companyName', title: '公司名称', width:180}
+                    ,{field:'serviceFee', title: '服务费金额', width:120, sort: true}
+                    ,{field:'firstPayFee', title: '第一笔支付金额', width:130}
+                    ,{field:'firstPayDate', title: '第一笔支付时间',width:150, sort: true}
+                    ,{field:'secondPayFee', title: '第二笔支付金额', width:130}
+                    ,{field:'secondPayDate', title: '第二笔支付时间', sort: true, width:150}
+                    ,{field:'thirdPayFee', title: '第三笔支付金额', width:150}
+                    ,{field:'thirdPayDate', title: '第三笔支付时间', sort: true, width:150}
+                    ,{field:'wealth', title: '操作', width:200,toolbar: '#barDemo'}
+                    ]
+                ],
+            data: [{
+                    "id": "1"
+                    ,"companyName": "分公司"
+                    ,"serviceFee": "100000"
+                    ,"firstPayFee": "20000"
+                    ,"firstPayDate": "2020-10-10"
+                    ,"secondPayFee": "3000"
+                    ,"secondPayDate": "2020-10-10"
+                    ,"thirdPayFee": "66666"
+                    ,"thirdPayDate": "2020-10-10"
+                },{
                 "id": "1"
                 ,"companyName": "分公司"
                 ,"serviceFee": "100000"
@@ -195,206 +203,214 @@
                 ,"thirdPayFee": "66666"
                 ,"thirdPayDate": "2020-10-10"
             },{
-            "id": "1"
-            ,"companyName": "分公司"
-            ,"serviceFee": "100000"
-            ,"firstPayFee": "20000"
-            ,"firstPayDate": "2020-10-10"
-            ,"secondPayFee": "3000"
-            ,"secondPayDate": "2020-10-10"
-            ,"thirdPayFee": "66666"
-            ,"thirdPayDate": "2020-10-10"
-        },{
-            "id": "1"
-            ,"companyName": "分公司"
-            ,"serviceFee": "100000"
-            ,"firstPayFee": "20000"
-            ,"firstPayDate": "2020-10-10"
-            ,"secondPayFee": "3000"
-            ,"secondPayDate": "2020-10-10"
-            ,"thirdPayFee": "66666"
-            ,"thirdPayDate": "2020-10-10"
-        },{
-            "id": "1"
-            ,"companyName": "分公司"
-            ,"serviceFee": "100000"
-            ,"firstPayFee": "20000"
-            ,"firstPayDate": "2020-10-10"
-            ,"secondPayFee": "3000"
-            ,"secondPayDate": "2020-10-10"
-            ,"thirdPayFee": "66666"
-            ,"thirdPayDate": "2020-10-10"
-        },{
-            "id": "1"
-            ,"companyName": "分公司"
-            ,"serviceFee": "100000"
-            ,"firstPayFee": "20000"
-            ,"firstPayDate": "2020-10-10"
-            ,"secondPayFee": "3000"
-            ,"secondPayDate": "2020-10-10"
-            ,"thirdPayFee": "66666"
-            ,"thirdPayDate": "2020-10-10"
-        },{
-            "id": "1"
-            ,"companyName": "分公司"
-            ,"serviceFee": "100000"
-            ,"firstPayFee": "20000"
-            ,"firstPayDate": "2020-10-10"
-            ,"secondPayFee": "3000"
-            ,"secondPayDate": "2020-10-10"
-            ,"thirdPayFee": "66666"
-            ,"thirdPayDate": "2020-10-10"
-        },{
-            "id": "1"
-            ,"companyName": "分公司"
-            ,"serviceFee": "100000"
-            ,"firstPayFee": "20000"
-            ,"firstPayDate": "2020-10-10"
-            ,"secondPayFee": "3000"
-            ,"secondPayDate": "2020-10-10"
-            ,"thirdPayFee": "66666"
-            ,"thirdPayDate": "2020-10-10"
-        },{
-            "id": "1"
-            ,"companyName": "分公司"
-            ,"serviceFee": "100000"
-            ,"firstPayFee": "20000"
-            ,"firstPayDate": "2020-10-10"
-            ,"secondPayFee": "3000"
-            ,"secondPayDate": "2020-10-10"
-            ,"thirdPayFee": "66666"
-            ,"thirdPayDate": "2020-10-10"
-        },{
-            "id": "1"
-            ,"companyName": "分公司"
-            ,"serviceFee": "100000"
-            ,"firstPayFee": "20000"
-            ,"firstPayDate": "2020-10-10"
-            ,"secondPayFee": "3000"
-            ,"secondPayDate": "2020-10-10"
-            ,"thirdPayFee": "66666"
-            ,"thirdPayDate": "2020-10-10"
-        },{
-            "id": "1"
-            ,"companyName": "分公司"
-            ,"serviceFee": "100000"
-            ,"firstPayFee": "20000"
-            ,"firstPayDate": "2020-10-10"
-            ,"secondPayFee": "3000"
-            ,"secondPayDate": "2020-10-10"
-            ,"thirdPayFee": "66666"
-            ,"thirdPayDate": "2020-10-10"
-        },{
-            "id": "1"
-            ,"companyName": "分公司"
-            ,"serviceFee": "100000"
-            ,"firstPayFee": "20000"
-            ,"firstPayDate": "2020-10-10"
-            ,"secondPayFee": "3000"
-            ,"secondPayDate": "2020-10-10"
-            ,"thirdPayFee": "66666"
-            ,"thirdPayDate": "2020-10-10"
-        },{
-            "id": "1"
-            ,"companyName": "分公司"
-            ,"serviceFee": "100000"
-            ,"firstPayFee": "20000"
-            ,"firstPayDate": "2020-10-10"
-            ,"secondPayFee": "3000"
-            ,"secondPayDate": "2020-10-10"
-            ,"thirdPayFee": "66666"
-            ,"thirdPayDate": "2020-10-10"
-        },{
-            "id": "1"
-            ,"companyName": "分公司"
-            ,"serviceFee": "100000"
-            ,"firstPayFee": "20000"
-            ,"firstPayDate": "2020-10-10"
-            ,"secondPayFee": "3000"
-            ,"secondPayDate": "2020-10-10"
-            ,"thirdPayFee": "66666"
-            ,"thirdPayDate": "2020-10-10"
-        }]
-            ,id: 'testReload'
-            ,page: true
-            ,height: 430
-        });
-
-        var $ = layui.$, active = {
-            reload: function(){
-                var demoReload = $('#demoReload');
-
-                //执行重载
-                table.reload('testReload', {
-                    page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                    ,where: {
-                        key: {
-                            id: demoReload.val()
-                        }
-                    }
-                }, 'data');
-            }
-        };
-
-        $('.demoTable .layui-btn').on('click', function(){
-            var type = $(this).data('type');
-            active[type] ? active[type].call(this) : '';
-        });
-
-
-        //监听表格复选框选择
-        table.on('checkbox(demo)', function(obj){
-            console.log(obj)
-        });
-        //监听工具条
-        table.on('tool(demo)', function(obj){
-            var data = obj.data;
-            if(obj.event === 'detail'){
-                layer.msg('ID：'+ data.id + ' 的查看操作');
-            } else if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    obj.del();
-                    layer.close(index);
-                });
-            } else if(obj.event === 'edit'){
-                layer.alert('编辑行：<br>'+ JSON.stringify(data))
-            }
-        });
-
-        var $ = layui.$, active = {
-            getCheckData: function(){ //获取选中数据
-                var checkStatus = table.checkStatus('idTest')
-                    ,data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
-            }
-            ,getCheckLength: function(){ //获取选中数目
-                var checkStatus = table.checkStatus('idTest')
-                    ,data = checkStatus.data;
-                layer.msg('选中了：'+ data.length + ' 个');
-            }
-            ,isAll: function(){ //验证是否全选
-                var checkStatus = table.checkStatus('idTest');
-                layer.msg(checkStatus.isAll ? '全选': '未全选')
-            }
-        };
-
-        $('.demoTable .layui-btn').on('click', function(){
-            var type = $(this).data('type');
-            active[type] ? active[type].call(this) : '';
-        });
-
-
-        lay('.layui_date').each(function() {
-            laydate.render({
-                elem: this,
-                trigger: 'click'
+                "id": "1"
+                ,"companyName": "分公司"
+                ,"serviceFee": "100000"
+                ,"firstPayFee": "20000"
+                ,"firstPayDate": "2020-10-10"
+                ,"secondPayFee": "3000"
+                ,"secondPayDate": "2020-10-10"
+                ,"thirdPayFee": "66666"
+                ,"thirdPayDate": "2020-10-10"
+            },{
+                "id": "1"
+                ,"companyName": "分公司"
+                ,"serviceFee": "100000"
+                ,"firstPayFee": "20000"
+                ,"firstPayDate": "2020-10-10"
+                ,"secondPayFee": "3000"
+                ,"secondPayDate": "2020-10-10"
+                ,"thirdPayFee": "66666"
+                ,"thirdPayDate": "2020-10-10"
+            },{
+                "id": "1"
+                ,"companyName": "分公司"
+                ,"serviceFee": "100000"
+                ,"firstPayFee": "20000"
+                ,"firstPayDate": "2020-10-10"
+                ,"secondPayFee": "3000"
+                ,"secondPayDate": "2020-10-10"
+                ,"thirdPayFee": "66666"
+                ,"thirdPayDate": "2020-10-10"
+            },{
+                "id": "1"
+                ,"companyName": "分公司"
+                ,"serviceFee": "100000"
+                ,"firstPayFee": "20000"
+                ,"firstPayDate": "2020-10-10"
+                ,"secondPayFee": "3000"
+                ,"secondPayDate": "2020-10-10"
+                ,"thirdPayFee": "66666"
+                ,"thirdPayDate": "2020-10-10"
+            },{
+                "id": "1"
+                ,"companyName": "分公司"
+                ,"serviceFee": "100000"
+                ,"firstPayFee": "20000"
+                ,"firstPayDate": "2020-10-10"
+                ,"secondPayFee": "3000"
+                ,"secondPayDate": "2020-10-10"
+                ,"thirdPayFee": "66666"
+                ,"thirdPayDate": "2020-10-10"
+            },{
+                "id": "1"
+                ,"companyName": "分公司"
+                ,"serviceFee": "100000"
+                ,"firstPayFee": "20000"
+                ,"firstPayDate": "2020-10-10"
+                ,"secondPayFee": "3000"
+                ,"secondPayDate": "2020-10-10"
+                ,"thirdPayFee": "66666"
+                ,"thirdPayDate": "2020-10-10"
+            },{
+                "id": "1"
+                ,"companyName": "分公司"
+                ,"serviceFee": "100000"
+                ,"firstPayFee": "20000"
+                ,"firstPayDate": "2020-10-10"
+                ,"secondPayFee": "3000"
+                ,"secondPayDate": "2020-10-10"
+                ,"thirdPayFee": "66666"
+                ,"thirdPayDate": "2020-10-10"
+            },{
+                "id": "1"
+                ,"companyName": "分公司"
+                ,"serviceFee": "100000"
+                ,"firstPayFee": "20000"
+                ,"firstPayDate": "2020-10-10"
+                ,"secondPayFee": "3000"
+                ,"secondPayDate": "2020-10-10"
+                ,"thirdPayFee": "66666"
+                ,"thirdPayDate": "2020-10-10"
+            },{
+                "id": "1"
+                ,"companyName": "分公司"
+                ,"serviceFee": "100000"
+                ,"firstPayFee": "20000"
+                ,"firstPayDate": "2020-10-10"
+                ,"secondPayFee": "3000"
+                ,"secondPayDate": "2020-10-10"
+                ,"thirdPayFee": "66666"
+                ,"thirdPayDate": "2020-10-10"
+            },{
+                "id": "1"
+                ,"companyName": "分公司"
+                ,"serviceFee": "100000"
+                ,"firstPayFee": "20000"
+                ,"firstPayDate": "2020-10-10"
+                ,"secondPayFee": "3000"
+                ,"secondPayDate": "2020-10-10"
+                ,"thirdPayFee": "66666"
+                ,"thirdPayDate": "2020-10-10"
+            },{
+                "id": "1"
+                ,"companyName": "分公司"
+                ,"serviceFee": "100000"
+                ,"firstPayFee": "20000"
+                ,"firstPayDate": "2020-10-10"
+                ,"secondPayFee": "3000"
+                ,"secondPayDate": "2020-10-10"
+                ,"thirdPayFee": "66666"
+                ,"thirdPayDate": "2020-10-10"
+            }]
+                ,id: 'testReload'
+                ,page: true
+                ,height: 430
             });
+
+            var $ = layui.$, active = {
+                reload: function(){
+                    var demoReload = $('#demoReload');
+
+                    //执行重载
+                    table.reload('testReload', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        ,where: {
+                            key: {
+                                id: demoReload.val()
+                            }
+                        }
+                    }, 'data');
+                }
+            };
+
+            $('.demoTable .layui-btn').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+
+            //监听表格复选框选择
+            table.on('checkbox(demo)', function(obj){
+                console.log(obj)
+            });
+            //监听工具条
+            table.on('tool(demo)', function(obj){
+                var data = obj.data;
+                if(obj.event === 'detail'){
+                    layer.msg('ID：'+ data.id + ' 的查看操作');
+                } else if(obj.event === 'del'){
+                    layer.confirm('真的删除行么', function(index){
+                        obj.del();
+                        layer.close(index);
+                    });
+                } else if(obj.event === 'edit'){
+                    layer.alert('编辑行：<br>'+ JSON.stringify(data))
+                }
+            });
+
+            var $ = layui.$, active = {
+                getCheckData: function(){ //获取选中数据
+                    var checkStatus = table.checkStatus('idTest')
+                        ,data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                }
+                ,getCheckLength: function(){ //获取选中数目
+                    var checkStatus = table.checkStatus('idTest')
+                        ,data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                }
+                ,isAll: function(){ //验证是否全选
+                    var checkStatus = table.checkStatus('idTest');
+                    layer.msg(checkStatus.isAll ? '全选': '未全选')
+                }
+            };
+
+            $('.demoTable .layui-btn').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+
+            lay('.layui_date').each(function() {
+                laydate.render({
+                    elem: this,
+                    trigger: 'click'
+                });
+            });
+
+
         });
 
+        /**
+         * 增加
+         */
+        $("#add").click(function () {
+            layer.open({
+                type: 2,
+                content: ['/addServiceFeeBefore','no'],
+                area: ['1000px','500px']
 
+            })
+        })
     });
+</script>
+
+
+<script>
+
 </script>
 
 
