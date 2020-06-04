@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hitachi.mapper.UserInfoMapper">
+
+    <select id="getUser" parameterType="String" resultType="com.example.hitachi.entity.UserInfo">
+        SELECT
+            HU.UUID,
+            HU.`NAME`,
+            HU.EMPNO,
+            HU.USER_NAME,
+            HU.`PASSWORD`
+        FROM
+            HITACHI_USER HU
+        WHERE
+            HU.USER_NAME = #{userName}
+        AND HU.`PASSWORD` = #{pss}
+    </select>
+
+
+</mapper>
