@@ -11,16 +11,11 @@
             padding: 15px 15px;
         }
 
-       em{
+       .custom_lanel{
            position: relative;
-           margin-left: 200px;
-           top: -25px;
+           margin-top: -10px;
        }
 
-        .jh_date{
-            position: relative;
-            margin-left: 15px;
-        }
 
 
     </style>
@@ -32,27 +27,59 @@
         <div class="layui-form-item">
             <label class="layui-form-label">合同编号</label>
             <div class="layui-input-inline">
-                <input type="text" name="title" required lay-verify="required" placeholder="请输入合同编号" autocomplete="off"
-                       class="layui-input">
+                <input type="text" name="contract_no" required lay-verify="required" placeholder="请输入合同编号" autocomplete="off"
+                       class="layui-input" maxlength="50">
             </div>
 
             <label class="layui-form-label">合同买方</label>
             <div class="layui-input-inline">
-                <input type="password" name="password" required lay-verify="required" placeholder="请输入合同买方"
-                       autocomplete="off" class="layui-input">
+                <input type="text" name="contract_buyer" required lay-verify="required" placeholder="请输入合同买方"
+                       autocomplete="off" class="layui-input" maxlength="50">
             </div>
 
             <label class="layui-form-label">使用单位</label>
             <div class="layui-input-inline">
-                <input type="password" name="password" required lay-verify="required" placeholder="请输入合同买方"
-                       autocomplete="off" class="layui-input">
+                <input type="text" name="use_company" required lay-verify="required" placeholder="请输入使用单位"
+                       autocomplete="off" class="layui-input" maxlength="50">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">公司名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="company_name" required lay-verify="required" placeholder="请输入公司名称" autocomplete="off"
+                       class="layui-input" maxlength="50">
             </div>
 
+            <label class="layui-form-label">服务费金额</label>
+            <div class="layui-input-inline">
+                <input type="text" name="serve_fee_cash" required lay-verify="required" placeholder="请输入服务费金额"
+                       autocomplete="off" class="layui-input" maxlength="50">
+            </div>
+
+            <label class="custom_lanel layui-form-label">合同贷款<br/>总额</label>
+            <div class="layui-input-inline">
+                <input type="text" name="contract_loan_total" required lay-verify="required" placeholder="请输入合同贷款总额"
+                       autocomplete="off" class="layui-input" maxlength="50">
+            </div>
+
+
         </div>
+
         <div class="layui-form-item">
+            <label class="custom_lanel layui-form-label">寄总公司<br/>日期</label>
+            <div class="layui-input-inline">
+                <input type="text" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
+            </div>
+
+            <label class="custom_lanel layui-form-label">收到确认书日期</label>
+            <div class="layui-input-inline">
+                <input type="text" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
+            </div>
+
             <label class="layui-form-label">责任人</label>
             <div class="layui-input-inline">
-                <select name="city" lay-verify="required">
+                <select name="person_liable" lay-verify="required">
                     <option value=""></option>
                     <option value="0">张三</option>
                     <option value="1">李四</option>
@@ -61,34 +88,54 @@
                 </select>
             </div>
 
+        </div>
+
+        <div class="layui-form-item">
+            <label class="custom_lanel layui-form-label">第一笔支付<br/>金额</label>
+            <div class="layui-input-inline">
+                <input type="text" name="first_pay_money" placeholder="请输入第一笔支付金额" autocomplete="off" class="layui-input" maxlength="50">
+            </div>
+
+            <label class="custom_lanel layui-form-label">第一笔支付<br/>时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name ="first_pay_date" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
+            </div>
+
             <label class="layui-form-label"></label>
             <div class="layui-input-inline">
-                <input type="checkbox" name="" title="是否三方" checked>
+                <input type="checkbox" name="is_three_contract" title="是否三方合同" checked>
             </div>
+
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">寄回总公司日期</label>
+            <label class="custom_lanel layui-form-label">第二笔支付<br/>金额</label>
             <div class="layui-input-inline">
-                <input type="text" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
-                <em class="ju_em">-</em>
+                <input type="text" name="second_pay_money" placeholder="请输入第二笔支付金额"
+                       autocomplete="off" class="layui-input" maxlength="50">
             </div>
 
-            <div class="jh_date layui-input-inline">
-                <input type="text" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
+            <label class="custom_lanel layui-form-label">第二笔支付<br/>时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="second_pay_date" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
             </div>
+
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">收到确认书日期</label>
-            <div class="layui-input-inline">
-                <input type="text" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
-                <em class="ju_em">-</em>
-            </div>
-            <div class="jh_date layui-input-inline">
-                <input type="text" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
+            <label class="custom_lanel layui-form-label">第三笔支付<br/>金额</label>
+            <div class="layui-input-inline" maxlength="50">
+                <input type="text" name="third_pay_money" placeholder="请输入第三笔支付金额" autocomplete="off" class="layui-input">
             </div>
 
+            <label class="custom_lanel layui-form-label">第三笔支付<br/>时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="third_pay_date" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">备注</label>
                 <div class="layui-input-block">
@@ -103,7 +150,6 @@
                 </div>
             </div>
         </div>
-
 
     </form>
 </div>
