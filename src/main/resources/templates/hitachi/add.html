@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
@@ -23,7 +23,7 @@
 </head>
 <body>
 <div class="add_container">
-    <form class="layui-form" action="">
+    <form class="layui-form" id="form">
         <div class="layui-form-item">
             <label class="layui-form-label">合同编号</label>
             <div class="layui-input-inline">
@@ -93,7 +93,7 @@
         <div class="layui-form-item">
             <label class="custom_lanel layui-form-label">第一笔支付<br/>金额</label>
             <div class="layui-input-inline">
-                <input type="text" name="first_pay_money" placeholder="请输入第一笔支付金额" autocomplete="off" class="layui-input" maxlength="50">
+                <input type="text" name="first_pay_fee" placeholder="请输入第一笔支付金额" autocomplete="off" class="layui-input" maxlength="50">
             </div>
 
             <label class="custom_lanel layui-form-label">第一笔支付<br/>时间</label>
@@ -103,7 +103,7 @@
 
             <label class="layui-form-label"></label>
             <div class="layui-input-inline">
-                <input type="checkbox" name="is_three_contract" title="是否三方合同" checked>
+                <input type="checkbox" name="is_three_contract" title="是否三方合同" value="1" checked>
             </div>
 
         </div>
@@ -111,7 +111,7 @@
         <div class="layui-form-item">
             <label class="custom_lanel layui-form-label">第二笔支付<br/>金额</label>
             <div class="layui-input-inline">
-                <input type="text" name="second_pay_money" placeholder="请输入第二笔支付金额"
+                <input type="text" name="second_pay_fee" placeholder="请输入第二笔支付金额"
                        autocomplete="off" class="layui-input" maxlength="50">
             </div>
 
@@ -125,7 +125,7 @@
         <div class="layui-form-item">
             <label class="custom_lanel layui-form-label">第三笔支付<br/>金额</label>
             <div class="layui-input-inline" maxlength="50">
-                <input type="text" name="third_pay_money" placeholder="请输入第三笔支付金额" autocomplete="off" class="layui-input">
+                <input type="text" name="third_pay_fee" placeholder="请输入第三笔支付金额" autocomplete="off" class="layui-input">
             </div>
 
             <label class="custom_lanel layui-form-label">第三笔支付<br/>时间</label>
@@ -146,11 +146,10 @@
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                    <button class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
+                    <button id="save" class="layui-btn" lay-submit = "" lay-filter="formDemo">提交</button>
                 </div>
             </div>
         </div>
-
     </form>
 </div>
 
@@ -159,10 +158,33 @@
         var form = layui.form, laydate = layui.laydate, layer = layui.layer;
 
         //监听提交
-        form.on('submit(formDemo)', function (data) {
-            layer.msg(JSON.stringify(data.field));
-            return false;
-        });
+//        form.on('submit(formDemo)', function (data) {
+//
+//            $.ajax({
+//                url: '/addServiceFee',
+//                method: 'post',
+//                data: data.field,
+//                dataType: 'JSON',
+//                success: function(res){
+//                    if (res === 'ok') {
+//                        layer.alert("修改成功", {icon: 6}, function () {
+//                            // 获得frame索引
+//                            var index = parent.layer.getFrameIndex(window.name);
+//                            //关闭当前frame
+//                            parent.layer.close(index);
+//                            //修改成功后刷新父界面
+//                            window.parent.location.reload();
+//                        });
+//                    } else {
+//                        layer.msg("修改失败");
+//                    }
+//                },
+//                error:function (data) {
+//
+//                }
+//
+//            });
+//        });
 
         lay('.add_date').each(function () {
             laydate.render({
@@ -171,6 +193,26 @@
             });
         });
 
+    });
+    
+    $(function () {
+        $("#save").click(function(){
+            $.ajax({
+                cache:true,
+                type:"post",
+                url:"/addServiceFee",
+                data:$("#form").serialize(),
+                async:false,
+                success:function(data){
+                    debugger
+                    var index = parent.layer.getFrameIndex(window.name);
+//                  //关闭当前frame
+                    parent.layer.close(index);
+//                  //修改成功后刷新父界面
+                    window.parent.location.reload();
+                }
+            })
+        });
     });
 </script>
 </body>

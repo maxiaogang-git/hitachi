@@ -166,13 +166,13 @@
             //方法级渲染
             table.render({
                 elem: '#LAY_table_user'
-    //            ,url: '/demo/table/user/'
+                ,url: '/getServiceFeeInfo?pageNo=page&pageSize=limit'
                 ,cols: [
                     [
                     {checkbox: true, fixed: true}
-                    ,{field:'id', title: '序号', width:80, sort: true, fixed: true}
+                    ,{field:'id', title: '序号', width:80, sort: true, fixed: true,type: 'numbers'}
                     ,{field:'companyName', title: '公司名称', width:180}
-                    ,{field:'serviceFee', title: '服务费金额', width:120, sort: true}
+                    ,{field:'serveFeeCash', title: '服务费金额', width:120, sort: true}
                     ,{field:'firstPayFee', title: '第一笔支付金额', width:130}
                     ,{field:'firstPayDate', title: '第一笔支付时间',width:150, sort: true}
                     ,{field:'secondPayFee', title: '第二笔支付金额', width:130}
@@ -182,139 +182,21 @@
                     ,{field:'wealth', title: '操作', width:200,toolbar: '#barDemo'}
                     ]
                 ],
-            data: [{
-                    "id": "1"
-                    ,"companyName": "分公司分公司分公司分公司分公司分公司分公司"
-                    ,"serviceFee": "100000"
-                    ,"firstPayFee": "20000"
-                    ,"firstPayDate": "2020-10-10"
-                    ,"secondPayFee": "3000"
-                    ,"secondPayDate": "2020-10-10"
-                    ,"thirdPayFee": "66666"
-                    ,"thirdPayDate": "2020-10-10"
-                },{
-                "id": "1"
-                ,"companyName": "分公司"
-                ,"serviceFee": "100000"
-                ,"firstPayFee": "20000"
-                ,"firstPayDate": "2020-10-10"
-                ,"secondPayFee": "3000"
-                ,"secondPayDate": "2020-10-10"
-                ,"thirdPayFee": "66666"
-                ,"thirdPayDate": "2020-10-10"
-            },{
-                "id": "1"
-                ,"companyName": "分公司"
-                ,"serviceFee": "100000"
-                ,"firstPayFee": "20000"
-                ,"firstPayDate": "2020-10-10"
-                ,"secondPayFee": "3000"
-                ,"secondPayDate": "2020-10-10"
-                ,"thirdPayFee": "66666"
-                ,"thirdPayDate": "2020-10-10"
-            },{
-                "id": "1"
-                ,"companyName": "分公司"
-                ,"serviceFee": "100000"
-                ,"firstPayFee": "20000"
-                ,"firstPayDate": "2020-10-10"
-                ,"secondPayFee": "3000"
-                ,"secondPayDate": "2020-10-10"
-                ,"thirdPayFee": "66666"
-                ,"thirdPayDate": "2020-10-10"
-            },{
-                "id": "1"
-                ,"companyName": "分公司"
-                ,"serviceFee": "100000"
-                ,"firstPayFee": "20000"
-                ,"firstPayDate": "2020-10-10"
-                ,"secondPayFee": "3000"
-                ,"secondPayDate": "2020-10-10"
-                ,"thirdPayFee": "66666"
-                ,"thirdPayDate": "2020-10-10"
-            },{
-                "id": "1"
-                ,"companyName": "分公司"
-                ,"serviceFee": "100000"
-                ,"firstPayFee": "20000"
-                ,"firstPayDate": "2020-10-10"
-                ,"secondPayFee": "3000"
-                ,"secondPayDate": "2020-10-10"
-                ,"thirdPayFee": "66666"
-                ,"thirdPayDate": "2020-10-10"
-            },{
-                "id": "1"
-                ,"companyName": "分公司"
-                ,"serviceFee": "100000"
-                ,"firstPayFee": "20000"
-                ,"firstPayDate": "2020-10-10"
-                ,"secondPayFee": "3000"
-                ,"secondPayDate": "2020-10-10"
-                ,"thirdPayFee": "66666"
-                ,"thirdPayDate": "2020-10-10"
-            },{
-                "id": "1"
-                ,"companyName": "分公司"
-                ,"serviceFee": "100000"
-                ,"firstPayFee": "20000"
-                ,"firstPayDate": "2020-10-10"
-                ,"secondPayFee": "3000"
-                ,"secondPayDate": "2020-10-10"
-                ,"thirdPayFee": "66666"
-                ,"thirdPayDate": "2020-10-10"
-            },{
-                "id": "1"
-                ,"companyName": "分公司"
-                ,"serviceFee": "100000"
-                ,"firstPayFee": "20000"
-                ,"firstPayDate": "2020-10-10"
-                ,"secondPayFee": "3000"
-                ,"secondPayDate": "2020-10-10"
-                ,"thirdPayFee": "66666"
-                ,"thirdPayDate": "2020-10-10"
-            },{
-                "id": "1"
-                ,"companyName": "分公司"
-                ,"serviceFee": "100000"
-                ,"firstPayFee": "20000"
-                ,"firstPayDate": "2020-10-10"
-                ,"secondPayFee": "3000"
-                ,"secondPayDate": "2020-10-10"
-                ,"thirdPayFee": "66666"
-                ,"thirdPayDate": "2020-10-10"
-            },{
-                "id": "1"
-                ,"companyName": "分公司"
-                ,"serviceFee": "100000"
-                ,"firstPayFee": "20000"
-                ,"firstPayDate": "2020-10-10"
-                ,"secondPayFee": "3000"
-                ,"secondPayDate": "2020-10-10"
-                ,"thirdPayFee": "66666"
-                ,"thirdPayDate": "2020-10-10"
-            },{
-                "id": "1"
-                ,"companyName": "分公司"
-                ,"serviceFee": "100000"
-                ,"firstPayFee": "20000"
-                ,"firstPayDate": "2020-10-10"
-                ,"secondPayFee": "3000"
-                ,"secondPayDate": "2020-10-10"
-                ,"thirdPayFee": "66666"
-                ,"thirdPayDate": "2020-10-10"
-            },{
-                "id": "1"
-                ,"companyName": "分公司"
-                ,"serviceFee": "100000"
-                ,"firstPayFee": "20000"
-                ,"firstPayDate": "2020-10-10"
-                ,"secondPayFee": "3000"
-                ,"secondPayDate": "2020-10-10"
-                ,"thirdPayFee": "66666"
-                ,"thirdPayDate": "2020-10-10"
-            }]
+                parseData : function (res) {
+                    return{
+                        "code": 0, //解析接口状态
+                        "count": res.count,
+                        "data": res.data//解析数据列表
+                    }
+                }
+                ,request:{
+                    pageName: 'currNo', //页码的参数名称，默认：page
+                    limitName: 'currSize' //每页数据量的参数名，默认：limit
+                }
                 ,id: 'testReload'
-                ,page: true
+                ,page:true
+                ,limit:10
+                ,limits:[10,20,30,40,50]
                 ,height: 430
             });
 

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hitachi.mapper.HitachiServiceFeeMapper">
+
+    <select id="getDataTotal" resultType="java.lang.Integer">
+        SELECT COUNT(UUID) FROM HITACHI_SERVE_FEE
+
+    </select>
+
+    <select id="getServiceFeeInfo" resultType="com.example.hitachi.entity.HitachiServiceFeeEntity">
+        SELECT
+            SF.UUID,
+            SF.CONTRACT_NO,
+            SF.CONTRACT_BUYER,
+            SF.USE_COMPANY,
+            SF.COMPANY_NAME,
+            SF.SERVE_FEE_CASH,
+            SF.CONTRACT_LOAN_TOTAL,
+            SF.SEND_COMPANY_DATE,
+            SF.GET_CONFIRM_DATE,
+            SF.PERSON_LIABLE,
+            SF.FIRST_PAY_FEE,
+            SF.FIRST_PAY_DATE,
+            SF.IS_THREE_CONTRACT,
+            SF.SECOND_PAY_FEE,
+            SF.SECOND_PAY_DATE,
+            SF.THIRD_PAY_FEE,
+            SF.THIRD_PAY_DATE,
+            SF.NOTE
+        FROM
+            HITACHI_SERVE_FEE SF LIMIT #{pageNo},#{pageSize}
+    </select>
+
+
+
+    <insert id="addServiceFee" parameterType="HitachiServiceFeeEntity" >
+            INSERT INTO HITACHI_SERVE_FEE(
+                UUID,
+                CONTRACT_NO,
+                CONTRACT_BUYER,
+                USE_COMPANY,
+                COMPANY_NAME,
+                SERVE_FEE_CASH,
+                CONTRACT_LOAN_TOTAL,
+                SEND_COMPANY_DATE,
+                GET_CONFIRM_DATE,
+                PERSON_LIABLE,
+                FIRST_PAY_FEE,
+                FIRST_PAY_DATE,
+                IS_THREE_CONTRACT,
+                SECOND_PAY_FEE,
+                SECOND_PAY_DATE,
+                THIRD_PAY_FEE,
+                THIRD_PAY_DATE,
+                NOTE )
+                VALUES(
+                #{uuid},
+                #{contract_no},
+                #{contract_buyer},
+                #{use_company},
+                #{company_name},
+                #{serve_fee_cash},
+                #{contract_loan_total},
+                #{send_company_date},
+                #{get_confirm_date},
+                #{person_liable},
+                #{first_pay_fee},
+                #{first_pay_date},
+                #{is_three_contract},
+                #{second_pay_fee},
+                #{second_pay_date},
+                #{third_pay_fee},
+                #{third_pay_date},
+                #{note}
+                )
+
+    </insert>
+
+
+</mapper>
