@@ -78,22 +78,23 @@
                 <!--<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>-->
                 <!--<button class="layui-btn" data-type="isAll">验证是否全选</button>-->
             <!--</div>-->
+            <!--<form class="layui-form">-->
                 <div style="height:20px;">
                     合同编号：
                     <div class="layui-inline">
-                        <input class="layui-input" name="id"  autocomplete="off">
+                        <input class="layui-input" name="contract_no" id="contract_no"  autocomplete="off">
                     </div>
                     合同买方：
                     <div class="layui-inline">
-                        <input class="layui-input" name="id"  autocomplete="off">
+                        <input class="layui-input" name="contract_buyer" id="contract_buyer"  autocomplete="off">
                     </div>
                     使用单位：
                     <div class="layui-inline">
-                        <input class="layui-input" name="id"  autocomplete="off">
+                        <input class="layui-input" name="use_company" id="use_company"  autocomplete="off">
                     </div>
                     责任人：
                     <div class="layui-inline">
-                        <input class="layui-input" name="id"  autocomplete="off">
+                        <input class="layui-input" name="person_liable" id="person_liable"  autocomplete="off">
                     </div>
 
 
@@ -101,7 +102,7 @@
                         <div class="layui-inline" id="layui_select">
                             三方合同：
                             <div class="layui-inline" id="layui_sel">
-                                <select name="label">
+                                <select name="is_three_contract" id="is_three_contract">
                                     <option value="">请选择</option>
                                     <option value="0">是</option>
                                     <option value="1">否</option>
@@ -116,31 +117,32 @@
                 <div class="search_div_two">
                     寄总公司日期：
                     <div class="layui-inline">
-                        <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="send_back_date_one" id="send_back_date_one" autocomplete="off">
+                        <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="send_start_date" id="send_start_date" autocomplete="off">
                     </div>
                     <em>-</em>
                     <div class="layui-inline">
-                        <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="send_back_date_two" id="send_back_date_two" autocomplete="off">
+                        <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="send_end_date" id="send_end_date" autocomplete="off">
                     </div>
                     收到确认书日期：
                     <div class="layui-inline">
-                        <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="receive_date_one" id="receive_date_one" autocomplete="off">
+                        <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="receive_start_date" id="receive_start_date" autocomplete="off">
                     </div>
                     <em>-</em>
                     <div class="layui-inline">
-                        <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="receive_date_two" id="receive_date_two" autocomplete="off">
+                        <input class="layui-input layui_date" placeholder="请选择日期" readonly="true" name="receive_end_date" id="receive_end_date" autocomplete="off">
                     </div>
                     <div class="btn_div_one layui-inline">
-                        <button class="layui-btn" >搜索</button>
-                        <button class="layui-btn" >重置</button>
+                        <button class="layui-btn" data-type="reload">搜索</button>
+                        <button class="layui-btn" data-type="reset" type="reset">重置</button>
                     </div>
                     <div class="btn_div_two">
                         <button class="layui-btn" id="add">增加</button>
-                        <button class="layui-btn" >删除</button>
+                        <button class="layui-btn" id="batchDelete">删除</button>
                     </div>
                 </div>
 
-            <table class="layui-hide" id="LAY_table_user" lay-filter="user"></table>
+            <!--</form>-->
+            <table class="layui-table" id="setvice_fee_table" lay-filter="service_fee_table_filter"></table>
         </div>
     </div>
 </div>
@@ -155,21 +157,17 @@
 <script>
 
     $(function () {
-
         layui.use(['table','element','laydate','layer'], function(){
             var table = layui.table;
-            var element = layui.element;
             var laydate = layui.laydate;
             var layer = layui.layer;
 
-
             //方法级渲染
             table.render({
-                elem: '#LAY_table_user'
-                ,url: '/getServiceFeeInfo?pageNo=page&pageSize=limit'
-                ,cols: [
-                    [
-                    {checkbox: true, fixed: true}
+                elem: '#setvice_fee_table'
+                ,url: '/getServiceFeeInfo'
+                ,cols: [ [
+                     {checkbox: true, fixed: true}
                     ,{field:'id', title: '序号', width:80, sort: true, fixed: true,type: 'numbers'}
                     ,{field:'companyName', title: '公司名称', width:180}
                     ,{field:'serveFeeCash', title: '服务费金额', width:120, sort: true}
@@ -182,6 +180,8 @@
                     ,{field:'wealth', title: '操作', width:200,toolbar: '#barDemo'}
                     ]
                 ],
+                
+                //返回数据解析
                 parseData : function (res) {
                     return{
                         "code": 0, //解析接口状态
@@ -189,47 +189,26 @@
                         "data": res.data//解析数据列表
                     }
                 }
+                //设置参数
                 ,request:{
                     pageName: 'currNo', //页码的参数名称，默认：page
                     limitName: 'currSize' //每页数据量的参数名，默认：limit
+
                 }
-                ,id: 'testReload'
+                ,id: 'service_fee_reload'
                 ,page:true
                 ,limit:10
                 ,limits:[10,20,30,40,50]
                 ,height: 430
             });
 
-            var $ = layui.$, active = {
-                reload: function(){
-                    var demoReload = $('#demoReload');
-
-                    //执行重载
-                    table.reload('testReload', {
-                        page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                        ,where: {
-                            key: {
-                                id: demoReload.val()
-                            }
-                        }
-                    }, 'data');
-                }
-            };
-
-            $('.demoTable .layui-btn').on('click', function(){
-                var type = $(this).data('type');
-                active[type] ? active[type].call(this) : '';
-            });
-
 
             //监听表格复选框选择
-            table.on('checkbox(demo)', function(obj){
+            table.on('checkbox(service_fee_table_filter)', function(obj){
                 console.log(obj)
             });
-            //监听工具条
-            table.on('tool(demo)', function(obj){
+            //监听工具条 
+            table.on('tool(service_fee_table_filter)', function(obj){
                 var data = obj.data;
                 if(obj.event === 'detail'){
                     layer.msg('ID：'+ data.id + ' 的查看操作');
@@ -243,42 +222,99 @@
                 }
             });
 
+
             var $ = layui.$, active = {
-                getCheckData: function(){ //获取选中数据
-                    var checkStatus = table.checkStatus('idTest')
+                //获取选中数据
+                getCheckData: function(){
+                    var checkStatus = table.checkStatus('service_fee_reload')
                         ,data = checkStatus.data;
                     layer.alert(JSON.stringify(data));
                 }
-                ,getCheckLength: function(){ //获取选中数目
-                    var checkStatus = table.checkStatus('idTest')
+                //获取选中数目
+                ,getCheckLength: function(){ 
+                    var checkStatus = table.checkStatus('service_fee_reload')
                         ,data = checkStatus.data;
                     layer.msg('选中了：'+ data.length + ' 个');
                 }
-                ,isAll: function(){ //验证是否全选
-                    var checkStatus = table.checkStatus('idTest');
+                //验证是否全选
+                ,isAll: function(){
+                    var checkStatus = table.checkStatus('service_fee_reload');
                     layer.msg(checkStatus.isAll ? '全选': '未全选')
+                }
+                
+                //搜索重加载
+                ,reload: function(){
+                    var data = {
+                         contract_no : $('#contract_no').val(),
+                         contract_buyer : $('#contract_buyer').val(),
+                         use_company : $('#use_company').val(),
+                         person_liable : $('#person_liable').val(),
+                         is_three_contract : $('#is_three_contract').val(),
+                         send_start_date : $('#send_start_date').val(),
+                         send_end_date : $('#send_end_date').val(),
+                         receive_start_date : $('#receive_start_date').val(),
+                         receive_end_date : $('#receive_end_date').val(),
+                    }
+//                    var contract_no = $('#contract_no').val();
+//                    var contract_buyer = $('#contract_buyer').val();
+//                    var use_company = $('#use_company').val();
+//                    var person_liable = $('#person_liable').val();
+//                    var is_three_contract = $('#is_three_contract').val();
+//                    var send_start_date = $('#send_start_date').val();
+//                    var send_end_date = $('#send_end_date').val();
+//                    var receive_start_date = $('#receive_start_date').val();
+//                    var receive_end_date = $('#receive_end_date').val();
+                    //执行重载
+                    table.reload('service_fee_reload', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        ,where: {
+                            map:data
+//                            map:{
+//                                contract_no: contract_no.val(),
+//                                contract_buyer: contract_buyer.val(),
+//                                use_company: use_company.val(),
+//                                person_liable: person_liable.val(),
+//                                is_three_contract: is_three_contract.val(),
+//                                send_start_date: send_start_date.val(),
+//                                send_end_date: send_end_date.val(),
+//                                receive_start_date: receive_start_date.val(),
+//                                receive_end_date: receive_end_date.val()
+//                            }
+
+                        },
+
+                    }, 'data');
+                }
+
+                ,reset: function () {
+
                 }
             };
 
+            //删除按钮状态监听
             $('.demoTable .layui-btn').on('click', function(){
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
             });
 
+            //搜索按钮状态监听
+            $('.btn_div_one .layui-btn').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
 
+            //为input设置时间
             lay('.layui_date').each(function() {
                 laydate.render({
                     elem: this,
                     trigger: 'click'
                 });
             });
-
-
         });
 
-        /**
-         * 增加
-         */
+        //增加服务费
         $("#add").click(function () {
             layer.open({
                 type: 2,
@@ -290,12 +326,6 @@
         })
     });
 </script>
-
-
-<script>
-
-</script>
-
 
 </body>
 </html>

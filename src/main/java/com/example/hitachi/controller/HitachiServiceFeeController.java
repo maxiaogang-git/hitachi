@@ -36,7 +36,8 @@ public class HitachiServiceFeeController {
 
     @GetMapping(value = "/getServiceFeeInfo")
     @ResponseBody
-    public Map<String,Object> getServiceFeeInfo(Model model,@RequestParam(name = "currNo",defaultValue = "1") int currNo,
+    public Map<String,Object> getServiceFeeInfo(Model model,
+                                                @RequestParam(name = "currNo",defaultValue = "1") int currNo,
                                                 @RequestParam(name = "currSize",defaultValue = "10") int currSize){
         Map<String,Object> resMap = hitachiServiceFeeService.getServiceFeeInfo(currNo,currSize);
         model.addAttribute(resMap);
