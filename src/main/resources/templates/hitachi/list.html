@@ -213,9 +213,28 @@
                 if(obj.event === 'detail'){
                     layer.msg('ID：'+ data.id + ' 的查看操作');
                 } else if(obj.event === 'del'){
-                    layer.confirm('真的删除行么', function(index){
-                        obj.del();
-                        layer.close(index);
+                    layer.confirm('确认要删除', function(index){
+                        var delData = [];
+                        delData.push(data.uuid);
+                        $.ajax({
+                            type:'post',
+                            url:'/batchDeleteServiceFee',
+                            contentType: "application/json;charset=UTF-8",
+                            data:JSON.stringify(delData),
+                            dataType:'text',
+                            success:function (result) {
+                                layer.msg('删除成功！',function () {
+                                    layer.close(index);
+                                    location.reload();
+                                });
+
+                            },
+                            error:function (e) {
+
+                            }
+
+                        });
+
                     });
                 } else if(obj.event === 'edit'){
                     layer.alert('编辑行：<br>'+ JSON.stringify(data))
@@ -231,8 +250,7 @@
                     if(length == 0){
                         layer.alert('请选择要删除的服务费')
                     }else{
-                        layer.confirm('确认要删除', {
-                        }, function(index){
+                        layer.confirm('确认要删除', function(index){
                             var delList = [];
                             for(var i=0;i<data.length;i++){
                                 delList.push(data[i].uuid)
@@ -285,35 +303,12 @@
                          receive_start_date : $('#receive_start_date').val(),
                          receive_end_date : $('#receive_end_date').val(),
                     }
-//                    var contract_no = $('#contract_no').val();
-//                    var contract_buyer = $('#contract_buyer').val();
-//                    var use_company = $('#use_company').val();
-//                    var person_liable = $('#person_liable').val();
-//                    var is_three_contract = $('#is_three_contract').val();
-//                    var send_start_date = $('#send_start_date').val();
-//                    var send_end_date = $('#send_end_date').val();
-//                    var receive_start_date = $('#receive_start_date').val();
-//                    var receive_end_date = $('#receive_end_date').val();
                     //执行重载
                     table.reload('service_fee_reload', {
                         page: {
                             curr: 1 //重新从第 1 页开始
                         }
-                        ,where: {
-                            map:data
-//                            map:{
-//                                contract_no: contract_no.val(),
-//                                contract_buyer: contract_buyer.val(),
-//                                use_company: use_company.val(),
-//                                person_liable: person_liable.val(),
-//                                is_three_contract: is_three_contract.val(),
-//                                send_start_date: send_start_date.val(),
-//                                send_end_date: send_end_date.val(),
-//                                receive_start_date: receive_start_date.val(),
-//                                receive_end_date: receive_end_date.val()
-//                            }
-
-                        },
+                        ,where: data
 
                     }, 'data');
                 }

@@ -11,9 +11,7 @@ import java.util.Map;
 @Repository
 public interface HitachiServiceFeeMapper {
 
-    List<HitachiServiceFeeEntity> getServiceFeeInfo(@Param(value = "pageNo") int pageNo,
-                                                    @Param(value = "pageSize") int pageSize);
-
+    List<HitachiServiceFeeEntity> getServiceFeeInfo(Map<String,Object> params);
 
     int addServiceFee(Map<String,Object> params);
 

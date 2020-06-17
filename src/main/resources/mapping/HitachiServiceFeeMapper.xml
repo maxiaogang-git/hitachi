@@ -4,11 +4,15 @@
 <mapper namespace="com.example.hitachi.mapper.HitachiServiceFeeMapper">
 
     <select id="getDataTotal" resultType="java.lang.Integer">
-        SELECT COUNT(UUID) FROM HITACHI_SERVE_FEE
-
+        SELECT COUNT(A.UUID) FROM (<include refid="baseServiceFeeData"/>) A
     </select>
 
     <select id="getServiceFeeInfo" resultType="com.example.hitachi.entity.HitachiServiceFeeEntity">
+        <include refid="baseServiceFeeData"/>
+        <include refid="pagingSql"/>
+    </select>
+
+    <sql id="baseServiceFeeData">
         SELECT
             SF.UUID,
             SF.CONTRACT_NO,
@@ -31,8 +35,38 @@
         FROM
             HITACHI_SERVE_FEE SF
         WHERE SF.SHOW_YN = 'Y'
+        <if test='contract_no != ""'>
+            AND SF.CONTRACT_NO = #{contract_no}
+        </if>
+        <if test='contract_buyer != ""'>
+            AND SF.CONTRACT_NO = #{contract_buyer}
+        </if>
+        <if test='use_company != ""'>
+            AND SF.CONTRACT_NO = #{use_company}
+        </if>
+        <if test='person_liable != ""'>
+            AND SF.CONTRACT_NO = #{person_liable}
+        </if>
+        <if test='is_three_contract != ""'>
+            AND SF.CONTRACT_NO = #{is_three_contract}
+        </if>
+        <if test='send_start_date != ""'>
+            AND SF.CONTRACT_NO = #{send_start_date}
+        </if>
+        <if test='send_end_date != ""'>
+            AND SF.CONTRACT_NO = #{send_end_date}
+        </if>
+        <if test='receive_start_date != ""'>
+            AND SF.CONTRACT_NO = #{receive_start_date}
+        </if>
+        <if test='receive_end_date != ""'>
+            AND SF.CONTRACT_NO = #{receive_end_date}
+        </if>
+    </sql>
+
+    <sql id="pagingSql">
         LIMIT #{pageNo},#{pageSize}
-    </select>
+    </sql>
 
 
 

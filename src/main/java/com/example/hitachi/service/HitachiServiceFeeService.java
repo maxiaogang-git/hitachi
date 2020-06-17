@@ -17,10 +17,11 @@ public class HitachiServiceFeeService {
     @Autowired
     private HitachiServiceFeeMapper hitachiServiceFeeMapper;
 
-    public Map<String,Object> getServiceFeeInfo(int pageNo,int pageSize){
+    public Map<String,Object> getServiceFeeInfo(Map<String,Object> params){
         Map<String,Object> map = new HashMap<>();
-        pageNo = (pageNo - 1) * pageSize;
-        List<HitachiServiceFeeEntity> list = hitachiServiceFeeMapper.getServiceFeeInfo(pageNo,pageSize);
+        int pageNo = ((Integer) params.get("pageNo") - 1) * (Integer) params.get("pageSize");
+        params.put("pageNo",pageNo);
+        List<HitachiServiceFeeEntity> list = hitachiServiceFeeMapper.getServiceFeeInfo(params);
         int total = hitachiServiceFeeMapper.getDataTotal();
         map.put("count",total);
         map.put("data",list);
