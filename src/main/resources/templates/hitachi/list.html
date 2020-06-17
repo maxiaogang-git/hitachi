@@ -78,23 +78,22 @@
                 <!--<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>-->
                 <!--<button class="layui-btn" data-type="isAll">验证是否全选</button>-->
             <!--</div>-->
-            <!--<form class="layui-form">-->
                 <div style="height:20px;">
                     合同编号：
                     <div class="layui-inline">
-                        <input class="layui-input" name="contract_no" id="contract_no"  autocomplete="off">
+                        <input class="layui-input" name="contract_no" id="contract_no"  autocomplete="off" placeholder="请输入合同编号">
                     </div>
                     合同买方：
                     <div class="layui-inline">
-                        <input class="layui-input" name="contract_buyer" id="contract_buyer"  autocomplete="off">
+                        <input class="layui-input" name="contract_buyer" id="contract_buyer"  autocomplete="off" placeholder="请输入合同买方">
                     </div>
                     使用单位：
                     <div class="layui-inline">
-                        <input class="layui-input" name="use_company" id="use_company"  autocomplete="off">
+                        <input class="layui-input" name="use_company" id="use_company"  autocomplete="off" placeholder="请输入使用单位">
                     </div>
                     责任人：
                     <div class="layui-inline">
-                        <input class="layui-input" name="person_liable" id="person_liable"  autocomplete="off">
+                        <input class="layui-input" name="person_liable" id="person_liable"  autocomplete="off" placeholder="请输入责任人">
                     </div>
 
 
@@ -136,12 +135,13 @@
                         <button class="layui-btn" data-type="reset" type="reset">重置</button>
                     </div>
                     <div class="btn_div_two">
-                        <button class="layui-btn" id="add">增加</button>
-                        <button class="layui-btn" id="batchDelete">删除</button>
+                        <div class="layui-btn-group demoTable">
+                            <button class="layui-btn" id="add">增加</button>
+                            <button class="layui-btn" id="batchDelete" data-type="getCheckData">删除</button>
+                        </div>
                     </div>
                 </div>
 
-            <!--</form>-->
             <table class="layui-table" id="setvice_fee_table" lay-filter="service_fee_table_filter"></table>
         </div>
     </div>
@@ -168,7 +168,7 @@
                 ,url: '/getServiceFeeInfo'
                 ,cols: [ [
                      {checkbox: true, fixed: true}
-                    ,{field:'id', title: '序号', width:80, sort: true, fixed: true,type: 'numbers'}
+                    ,{title: '序号', width:80, fixed: true,type: 'numbers'}
                     ,{field:'companyName', title: '公司名称', width:180}
                     ,{field:'serveFeeCash', title: '服务费金额', width:120, sort: true}
                     ,{field:'firstPayFee', title: '第一笔支付金额', width:130}
@@ -226,9 +226,39 @@
             var $ = layui.$, active = {
                 //获取选中数据
                 getCheckData: function(){
-                    var checkStatus = table.checkStatus('service_fee_reload')
-                        ,data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
+                    var checkStatus = table.checkStatus('service_fee_reload'),data = checkStatus.data;
+                    var length = data.length;
+                    if(length == 0){
+                        layer.alert('请选择要删除的服务费')
+                    }else{
+                        layer.confirm('确认要删除', {
+                        }, function(index){
+                            var delList = [];
+                            for(var i=0;i<data.length;i++){
+                                delList.push(data[i].uuid)
+                            }
+                            var list = JSON.stringify(delList)
+                            $.ajax({
+                                type:'post',
+                                url:'/batchDeleteServiceFee',
+                                contentType: "application/json;charset=UTF-8",
+                                data:list,
+                                dataType:'text',
+                                success:function (result) {
+                                    layer.msg('删除成功！',function () {
+                                        layer.close(index);
+                                        location.reload();
+                                    });
+
+                                },
+                                error:function (e) {
+
+                                }
+
+                            });
+                        });
+
+                    }
                 }
                 //获取选中数目
                 ,getCheckLength: function(){ 

@@ -6,10 +6,7 @@ import com.example.hitachi.service.HitachiServiceFeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -42,6 +39,13 @@ public class HitachiServiceFeeController {
         Map<String,Object> resMap = hitachiServiceFeeService.getServiceFeeInfo(currNo,currSize);
         model.addAttribute(resMap);
         return resMap;
+    }
+
+
+    @PostMapping(value = "/batchDeleteServiceFee")
+    public String batchDeleteServiceFee(@RequestBody List<String> list){
+        hitachiServiceFeeService.batchDeleteServiceFee(list);
+        return "redirect:/getServiceFeeInfo";
     }
 
 }

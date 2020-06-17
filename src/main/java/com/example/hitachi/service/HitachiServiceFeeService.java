@@ -41,4 +41,11 @@ public class HitachiServiceFeeService {
 
 
 
+
+    public int batchDeleteServiceFee(List<String> list){
+        return hitachiServiceFeeMapper.batchDeleteServiceFee(list);
+    }
+
+
+
 }

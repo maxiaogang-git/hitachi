@@ -29,7 +29,9 @@
             SF.THIRD_PAY_DATE,
             SF.NOTE
         FROM
-            HITACHI_SERVE_FEE SF LIMIT #{pageNo},#{pageSize}
+            HITACHI_SERVE_FEE SF
+        WHERE SF.SHOW_YN = 'Y'
+        LIMIT #{pageNo},#{pageSize}
     </select>
 
 
@@ -53,7 +55,8 @@
                 SECOND_PAY_DATE,
                 THIRD_PAY_FEE,
                 THIRD_PAY_DATE,
-                NOTE )
+                NOTE,
+                SHOW_YN)
                 VALUES(
                 #{uuid},
                 #{contract_no},
@@ -72,10 +75,19 @@
                 #{second_pay_date},
                 #{third_pay_fee},
                 #{third_pay_date},
-                #{note}
-                )
+                #{note},
+                'Y')
 
     </insert>
+
+
+    <update id="batchDeleteServiceFee" parameterType="java.util.List">
+        UPDATE HITACHI_SERVE_FEE SF SET SHOW_YN = 'N' WHERE UUID IN
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+
+    </update>
 
 
 </mapper>

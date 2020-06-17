@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
@@ -157,34 +157,6 @@
     layui.use(['form', 'laydate', 'layer'], function () {
         var form = layui.form, laydate = layui.laydate, layer = layui.layer;
 
-        //监听提交
-//        form.on('submit(formDemo)', function (data) {
-//
-//            $.ajax({
-//                url: '/addServiceFee',
-//                method: 'post',
-//                data: data.field,
-//                dataType: 'JSON',
-//                success: function(res){
-//                    if (res === 'ok') {
-//                        layer.alert("修改成功", {icon: 6}, function () {
-//                            // 获得frame索引
-//                            var index = parent.layer.getFrameIndex(window.name);
-//                            //关闭当前frame
-//                            parent.layer.close(index);
-//                            //修改成功后刷新父界面
-//                            window.parent.location.reload();
-//                        });
-//                    } else {
-//                        layer.msg("修改失败");
-//                    }
-//                },
-//                error:function (data) {
-//
-//                }
-//
-//            });
-//        });
 
         lay('.add_date').each(function () {
             laydate.render({
@@ -206,9 +178,9 @@
                 success:function(data){
                     debugger
                     var index = parent.layer.getFrameIndex(window.name);
-//                  //关闭当前frame
+                    //关闭当前frame
                     parent.layer.close(index);
-//                  //修改成功后刷新父界面
+                    //修改成功后刷新父界面
                     window.parent.location.reload();
                 }
             })

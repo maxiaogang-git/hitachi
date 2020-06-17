@@ -19,5 +19,7 @@ public interface HitachiServiceFeeMapper {
 
     int getDataTotal();
 
+    int batchDeleteServiceFee(List<String> list);
+
 
 }
