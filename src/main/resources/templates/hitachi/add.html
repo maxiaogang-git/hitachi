@@ -57,10 +57,18 @@
                        autocomplete="off" class="layui-input" maxlength="50">
             </div>
 
-            <label class="custom_lanel layui-form-label">合同贷款<br/>总额</label>
+
+
+            <label class="layui-form-label">责任人</label>
             <div class="layui-input-inline">
-                <input type="text" name="contract_loan_total" required lay-verify="required" placeholder="请输入合同贷款总额"
-                       autocomplete="off" class="layui-input" maxlength="50">
+                <!--<select name="person_liable" lay-verify="required">-->
+                <!--<option value=""></option>-->
+                <!--<option value="0">张三</option>-->
+                <!--<option value="1">李四</option>-->
+                <!--<option value="2">王五</option>-->
+                <!--<option value="3">赵六</option>-->
+                <!--</select>-->
+                <input type="text" name="person_liable" required lay-verify="required" placeholder="请输入责任人" autocomplete="off" class="layui-input" maxlength="50">
             </div>
 
 
@@ -77,15 +85,10 @@
                 <input type="text" autocomplete="off" name="get_confirm_date" class="add_date layui-input" placeholder="请选择日期" readonly="true">
             </div>
 
-            <label class="layui-form-label">责任人</label>
+            <label class="custom_lanel layui-form-label">合同贷款<br/>总额</label>
             <div class="layui-input-inline">
-                <select name="person_liable" lay-verify="required">
-                    <option value=""></option>
-                    <option value="0">张三</option>
-                    <option value="1">李四</option>
-                    <option value="2">王五</option>
-                    <option value="3">赵六</option>
-                </select>
+                <input type="text" name="contract_loan_total" required lay-verify="required" placeholder="请输入合同贷款总额"
+                       autocomplete="off" class="layui-input" maxlength="50">
             </div>
 
         </div>
@@ -139,13 +142,13 @@
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">备注</label>
                 <div class="layui-input-block">
-                    <textarea name="note" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    <textarea name="note" placeholder="请输入内容" class="layui-textarea" maxlength="200"></textarea>
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    <button class="layui-btn layui-btn-primary" id="cancel">取消</button>
                     <button class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
                 </div>
             </div>
@@ -189,6 +192,15 @@
                 trigger: 'click'//呼出事件改成click
             });
         });
+
+        //取消按钮关闭增加弹窗
+        $(function () {
+            $("#cancel").click(function () {
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                parent.layer.close(index);
+                location.reload()
+            })
+        })
 
     });
 
