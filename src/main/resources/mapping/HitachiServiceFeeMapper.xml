@@ -58,6 +58,8 @@
             AND SF.GET_CONFIRM_DATE BETWEEN #{receive_start_date} AND #{receive_end_date}
         </if>
 
+        ORDER BY SF.SEND_COMPANY_DATE DESC
+
     </sql>
 
     <sql id="pagingSql">

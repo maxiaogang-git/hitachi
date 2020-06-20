@@ -13,10 +13,6 @@
             margin-top: 30px;
         }
 
-        .btn_div_two{
-            position: relative;
-            margin-top: 15px;
-        }
         .btn_div_one{
             position: relative;
             margin-left: 60px;
@@ -60,6 +56,21 @@
             width: 120px;
         }
 
+        div[lay-event ="LAYTABLE_EXPORT"],div[lay-event ="LAYTABLE_PRINT"]{
+            display: none;
+        }
+
+        div[class="layui-table-body layui-table-main"]{
+            height: 340px;
+        }
+
+        .layui-form layui-border-box layui-table-view{
+            height: 430px;
+            position: relative;
+            top: -10px;
+        }
+
+
 
     </style>
 
@@ -73,11 +84,6 @@
 
     <div class="layui-body">
         <div style="padding: 15px;">
-            <!--<div class="layui-btn-group demoTable">-->
-                <!--<button class="layui-btn" data-type="getCheckData">获取选中行数据</button>-->
-                <!--<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>-->
-                <!--<button class="layui-btn" data-type="isAll">验证是否全选</button>-->
-            <!--</div>-->
                 <div style="height:20px;">
                     合同编号：
                     <div class="layui-inline">
@@ -96,7 +102,6 @@
                         <input class="layui-input" name="person_liable" id="person_liable"  autocomplete="off" placeholder="请输入责任人">
                     </div>
 
-
                     <div class="layui-form">
                         <div class="layui-inline" id="layui_select">
                             三方合同：
@@ -109,9 +114,7 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-
 
                 <div class="search_div_two">
                     寄总公司日期：
@@ -134,12 +137,7 @@
                         <button class="layui-btn" data-type="reload">搜索</button>
                         <button class="layui-btn" data-type="reset" type="reset">重置</button>
                     </div>
-                    <div class="btn_div_two">
-                        <div class="layui-btn-group demoTable">
-                            <button class="layui-btn" id="add">增加</button>
-                            <button class="layui-btn" id="batchDelete" data-type="getCheckData">删除</button>
-                        </div>
-                    </div>
+
                 </div>
 
             <table class="layui-table" id="setvice_fee_table" lay-filter="service_fee_table_filter"></table>
@@ -149,9 +147,16 @@
 
 
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <!--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>-->
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container demoTable" >
+        <button class="layui-btn" id="add" data-type="add">增加</button>
+        <button class="layui-btn" id="batchDelete" data-type="batchDelData">删除</button>
+    </div>
 </script>
 
 <script>
@@ -166,10 +171,24 @@
             table.render({
                 elem: '#setvice_fee_table'
                 ,url: '/getServiceFeeInfo'
+                ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+//                ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+//                    title: '提示'
+//                    ,layEvent: 'LAYTABLE_TIPS'
+//                    ,icon: 'layui-icon-tips'
+//                }]
+                //(下载excel的文件名)
+                ,title: '服务费数据表'
                 ,cols: [ [
                      {checkbox: true, fixed: true}
                     ,{title: '序号', width:80, fixed: true,type: 'numbers'}
-                    ,{field:'companyName', title: '公司名称', width:180}
+                    ,{field:'contractNo', title: '合同编号', width:100}
+                    ,{field:'contractBuyer', title: '合同买方', width:120}
+                    ,{field:'useCompany', title: '使用单位', width:120}
+                    ,{field:'personLiable', title: '责任人', width:100}
+                    ,{field:'sendCompanyDate', title: '寄总公司日期', width:130,sort:true}
+                    ,{field:'getConfirmDate', title: '收到确认书日期', width:150,sort:true}
+                    ,{field:'companyName', title: '公司名称', width:120}
                     ,{field:'serveFeeCash', title: '服务费金额', width:120, sort: true}
                     ,{field:'firstPayFee', title: '第一笔支付金额', width:130}
                     ,{field:'firstPayDate', title: '第一笔支付时间',width:150, sort: true}
@@ -177,7 +196,16 @@
                     ,{field:'secondPayDate', title: '第二笔支付时间', sort: true, width:150}
                     ,{field:'thirdPayFee', title: '第三笔支付金额', width:150}
                     ,{field:'thirdPayDate', title: '第三笔支付时间', sort: true, width:150}
-                    ,{field:'wealth', title: '操作', width:200,toolbar: '#barDemo'}
+                    ,{field:'note', title: '备注', sort: true, width:150,align:'center',hide:true}
+                    ,{field:'isThreeContract', title: '三方合同', width:100,align:'center', templet:function (result) {
+                        if(result.isThreeContract == '1'){
+                            return isThreeContract='<label style="color: #009688"><b>是</b></label>'
+                        }else{
+                            return isThreeContract='<label style="color: #FFB800"><b>否</b></label>'
+                        }
+
+                    }}
+                    ,{field:'wealth', title: '操作', width:120,align:'center',toolbar: '#barDemo'}
                     ]
                 ],
                 
@@ -199,7 +227,7 @@
                 ,page:true
                 ,limit:10
                 ,limits:[10,20,30,40,50]
-                ,height: 430
+                ,height: 500
             });
 
 
@@ -213,7 +241,7 @@
                 if(obj.event === 'detail'){
                     layer.msg('ID：'+ data.id + ' 的查看操作');
                 } else if(obj.event === 'del'){
-                    layer.confirm('确认要删除', function(index){
+                    layer.confirm('确认要删除?', function(index){
                         var delData = [];
                         delData.push(data.uuid);
                         $.ajax({
@@ -223,15 +251,13 @@
                             data:JSON.stringify(delData),
                             dataType:'text',
                             success:function (result) {
-                                layer.msg('删除成功！',function () {
+                                layer.msg('删除成功！',{anim:6,time:2000},function () {
                                     layer.close(index);
                                     location.reload();
                                 });
 
                             },
-                            error:function (e) {
-
-                            }
+                            error:function (e) {}
 
                         });
 
@@ -243,14 +269,14 @@
 
 
             var $ = layui.$, active = {
-                //获取选中数据
-                getCheckData: function(){
+                //批量删除数据
+                batchDelData: function(){
                     var checkStatus = table.checkStatus('service_fee_reload'),data = checkStatus.data;
                     var length = data.length;
                     if(length == 0){
                         layer.alert('请选择要删除的服务费')
                     }else{
-                        layer.confirm('确认要删除', function(index){
+                        layer.confirm('确认要删除？', function(index){
                             var delList = [];
                             for(var i=0;i<data.length;i++){
                                 delList.push(data[i].uuid)
@@ -263,7 +289,7 @@
                                 data:list,
                                 dataType:'text',
                                 success:function (result) {
-                                    layer.msg('删除成功！',{icon: 1},function () {
+                                    layer.msg('删除成功！',{anim:6,time:2000},function () {
                                         layer.close(index);
                                         location.reload();
                                     });
@@ -288,6 +314,16 @@
                 ,isAll: function(){
                     var checkStatus = table.checkStatus('service_fee_reload');
                     layer.msg(checkStatus.isAll ? '全选': '未全选')
+                }
+                //增加
+                ,add:function () {
+                    layer.open({
+                        type: 2,
+                        content: '/addServiceFeeBefore',
+                        area: ['1100px','630px'],
+                        title: '增加服务费'
+
+                    })
                 }
                 
                 //搜索重加载
@@ -330,7 +366,7 @@
                 }
             };
 
-            //删除按钮状态监听
+            //增加/删除按钮状态监听
             $('.demoTable .layui-btn').on('click', function(){
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
@@ -350,17 +386,6 @@
                 });
             });
         });
-
-        //增加服务费
-        $("#add").click(function () {
-            layer.open({
-                type: 2,
-                content: '/addServiceFeeBefore',
-                area: ['1100px','650px'],
-                title: '增加服务费'
-
-            })
-        })
 
         });
 </script>
