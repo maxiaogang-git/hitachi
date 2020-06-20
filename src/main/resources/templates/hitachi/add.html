@@ -146,7 +146,7 @@
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                    <button id="save" class="layui-btn" lay-submit = "" lay-filter="formDemo">提交</button>
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
                 </div>
             </div>
         </div>
@@ -157,6 +157,31 @@
     layui.use(['form', 'laydate', 'layer'], function () {
         var form = layui.form, laydate = layui.laydate, layer = layui.layer;
 
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            var datas = data.field;
+            $.ajax({
+                url:"/addServiceFee",
+                data: datas,
+                type: "POST",
+                dataType: "json",
+                success: function (msg) {
+                    if (msg === 1) {
+                        layer.msg('增加成功', {
+                            icon: 1,
+                            time: 2000
+                        },function () {
+                            parent.location.reload();
+                        });
+                    }
+                },
+                error: function (error) {
+
+                }
+            });
+            return false;
+        });
+
 
         lay('.add_date').each(function () {
             laydate.render({
@@ -166,26 +191,7 @@
         });
 
     });
-    
-    $(function () {
-        $("#save").click(function(){
-            $.ajax({
-                cache:true,
-                type:"post",
-                url:"/addServiceFee",
-                data:$("#form").serialize(),
-                async:false,
-                success:function(data){
-                    debugger
-                    var index = parent.layer.getFrameIndex(window.name);
-                    //关闭当前frame
-                    parent.layer.close(index);
-                    //修改成功后刷新父界面
-                    window.parent.location.reload();
-                }
-            })
-        });
-    });
+
 </script>
 </body>
 </html>

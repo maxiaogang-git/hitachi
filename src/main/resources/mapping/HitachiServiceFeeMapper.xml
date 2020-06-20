@@ -35,33 +35,29 @@
         FROM
             HITACHI_SERVE_FEE SF
         WHERE SF.SHOW_YN = 'Y'
-        <if test='contract_no != ""'>
-            AND SF.CONTRACT_NO = #{contract_no}
+        <if test='contract_no != "" and contract_no !=null '>
+            AND SF.CONTRACT_NO LIKE '%' #{contract_no} '%'
         </if>
-        <if test='contract_buyer != ""'>
-            AND SF.CONTRACT_NO = #{contract_buyer}
+        <if test='contract_buyer != "" and contract_buyer != null '>
+            AND SF.CONTRACT_BUYER LIKE '%' #{contract_buyer} '%'
         </if>
-        <if test='use_company != ""'>
-            AND SF.CONTRACT_NO = #{use_company}
+        <if test='use_company != "" and use_company != null '>
+            AND SF.USE_COMPANY LIKE '%' #{use_company} '%'
         </if>
-        <if test='person_liable != ""'>
-            AND SF.CONTRACT_NO = #{person_liable}
+        <if test='person_liable != "" and person_liable != null '>
+            AND SF.PERSON_LIABLE LIKE '%' #{person_liable} '%'
         </if>
-        <if test='is_three_contract != ""'>
-            AND SF.CONTRACT_NO = #{is_three_contract}
+        <if test='is_three_contract != "" and is_three_contract != null '>
+            AND SF.IS_THREE_CONTRACT LIKE '%' #{is_three_contract} '%'
         </if>
-        <if test='send_start_date != ""'>
-            AND SF.CONTRACT_NO = #{send_start_date}
+        <if test='(send_start_date != "" and send_start_date != null) and (send_end_date != "" and send_end_date != null)'>
+            AND SF.SEND_COMPANY_DATE BETWEEN #{send_start_date} AND #{send_end_date}
         </if>
-        <if test='send_end_date != ""'>
-            AND SF.CONTRACT_NO = #{send_end_date}
+
+        <if test='(receive_start_date != "" and receive_start_date != null) and (receive_end_date != "" and receive_end_date != null)'>
+            AND SF.GET_CONFIRM_DATE BETWEEN #{receive_start_date} AND #{receive_end_date}
         </if>
-        <if test='receive_start_date != ""'>
-            AND SF.CONTRACT_NO = #{receive_start_date}
-        </if>
-        <if test='receive_end_date != ""'>
-            AND SF.CONTRACT_NO = #{receive_end_date}
-        </if>
+
     </sql>
 
     <sql id="pagingSql">

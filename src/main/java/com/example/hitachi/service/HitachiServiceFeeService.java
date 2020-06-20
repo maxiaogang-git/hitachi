@@ -22,7 +22,7 @@ public class HitachiServiceFeeService {
         int pageNo = ((Integer) params.get("pageNo") - 1) * (Integer) params.get("pageSize");
         params.put("pageNo",pageNo);
         List<HitachiServiceFeeEntity> list = hitachiServiceFeeMapper.getServiceFeeInfo(params);
-        int total = hitachiServiceFeeMapper.getDataTotal();
+        int total = hitachiServiceFeeMapper.getDataTotal(params);
         map.put("count",total);
         map.put("data",list);
         return map;

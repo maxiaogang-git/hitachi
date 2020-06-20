@@ -263,7 +263,7 @@
                                 data:list,
                                 dataType:'text',
                                 success:function (result) {
-                                    layer.msg('删除成功！',function () {
+                                    layer.msg('删除成功！',{icon: 1},function () {
                                         layer.close(index);
                                         location.reload();
                                     });
@@ -313,7 +313,19 @@
                     }, 'data');
                 }
 
+                //重置
                 ,reset: function () {
+                    $('#contract_no').val('');
+                    $('#contract_buyer').val('');
+                    $('#use_company').val('');
+                    $('#person_liable').val('');
+                    $('#is_three_contract').val('');
+                    $('#send_start_date').val('');
+                    $('#send_end_date').val('');
+                    $('#receive_start_date').val('');
+                    $('#receive_end_date').val('');
+                    location.reload();
+
 
                 }
             };
@@ -344,12 +356,13 @@
             layer.open({
                 type: 2,
                 content: '/addServiceFeeBefore',
-                area: ['1000px','500px'],
+                area: ['1100px','650px'],
                 title: '增加服务费'
 
             })
         })
-    });
+
+        });
 </script>
 
 </body>

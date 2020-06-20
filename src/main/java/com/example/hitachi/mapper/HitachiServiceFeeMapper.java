@@ -15,7 +15,7 @@ public interface HitachiServiceFeeMapper {
 
     int addServiceFee(Map<String,Object> params);
 
-    int getDataTotal();
+    int getDataTotal(Map<String,Object> params);
 
     int batchDeleteServiceFee(List<String> list);
 

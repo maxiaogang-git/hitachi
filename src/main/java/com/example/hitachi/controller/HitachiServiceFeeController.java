@@ -34,10 +34,9 @@ public class HitachiServiceFeeController {
      * @return
      */
     @PostMapping(value = "/addServiceFee")
-    public String addServiceFee(@RequestParam Map<String ,Object> data){
-
-        hitachiServiceFeeService.addServiceFee(data);
-        return "redirect:/getServiceFeeInfo";
+    @ResponseBody
+    public int addServiceFee(@RequestParam Map<String ,Object> data,Model model){
+        return hitachiServiceFeeService.addServiceFee(data);
     }
 
     /**
