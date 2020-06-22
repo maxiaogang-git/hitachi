@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
@@ -24,23 +24,26 @@
 <body>
 <div class="add_container">
     <form class="layui-form" id="form">
+
+        <input type="hidden" name="_method" value="put" th:if="${data!=null}">
+        <input type="hidden" name="uuid" th:value="${data!=null}?${data.uuid}">
         <div class="layui-form-item">
             <label class="layui-form-label">合同编号</label>
             <div class="layui-input-inline">
                 <input type="text" name="contract_no" required lay-verify="required" placeholder="请输入合同编号" autocomplete="off"
-                       class="layui-input" maxlength="50">
+                       class="layui-input" maxlength="50" th:value="${data !=null}?${data.contractNo}">
             </div>
 
             <label class="layui-form-label">合同买方</label>
             <div class="layui-input-inline">
                 <input type="text" name="contract_buyer" required lay-verify="required" placeholder="请输入合同买方"
-                       autocomplete="off" class="layui-input" maxlength="50">
+                       autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.contractBuyer}">
             </div>
 
             <label class="layui-form-label">使用单位</label>
             <div class="layui-input-inline">
                 <input type="text" name="use_company" required lay-verify="required" placeholder="请输入使用单位"
-                       autocomplete="off" class="layui-input" maxlength="50">
+                       autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.useCompany}">
             </div>
         </div>
 
@@ -48,13 +51,13 @@
             <label class="layui-form-label">公司名称</label>
             <div class="layui-input-inline">
                 <input type="text" name="company_name" required lay-verify="required" placeholder="请输入公司名称" autocomplete="off"
-                       class="layui-input" maxlength="50">
+                       class="layui-input" maxlength="50" th:value="${data !=null}?${data.companyName}">
             </div>
 
             <label class="layui-form-label">服务费金额</label>
             <div class="layui-input-inline">
                 <input type="text" name="serve_fee_cash" required lay-verify="required" placeholder="请输入服务费金额"
-                       autocomplete="off" class="layui-input" maxlength="50">
+                       autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.serveFeeCash}">
             </div>
 
 
@@ -68,7 +71,8 @@
                 <!--<option value="2">王五</option>-->
                 <!--<option value="3">赵六</option>-->
                 <!--</select>-->
-                <input type="text" name="person_liable" required lay-verify="required" placeholder="请输入责任人" autocomplete="off" class="layui-input" maxlength="50">
+                <input type="text" name="person_liable" required lay-verify="required" placeholder="请输入责任人"
+                       autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.personLiable}">
             </div>
 
 
@@ -77,18 +81,18 @@
         <div class="layui-form-item">
             <label class="custom_lanel layui-form-label">寄总公司<br/>日期</label>
             <div class="layui-input-inline">
-                <input type="text" autocomplete="off" name="send_company_date" class="add_date layui-input" placeholder="请选择日期" readonly="true">
+                <input type="text" autocomplete="off" name="send_company_date" class="add_date layui-input" placeholder="请选择日期" readonly="true" th:value="${data !=null}?${data.sendCompanyDate}">
             </div>
 
             <label class="custom_lanel layui-form-label">收到确认书日期</label>
             <div class="layui-input-inline">
-                <input type="text" autocomplete="off" name="get_confirm_date" class="add_date layui-input" placeholder="请选择日期" readonly="true">
+                <input type="text" autocomplete="off" name="get_confirm_date" class="add_date layui-input" placeholder="请选择日期" readonly="true" th:value="${data !=null}?${data.getConfirmDate}">
             </div>
 
             <label class="custom_lanel layui-form-label">合同贷款<br/>总额</label>
             <div class="layui-input-inline">
                 <input type="text" name="contract_loan_total" required lay-verify="required" placeholder="请输入合同贷款总额"
-                       autocomplete="off" class="layui-input" maxlength="50">
+                       autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.contractLoanTotal}">
             </div>
 
         </div>
@@ -96,17 +100,17 @@
         <div class="layui-form-item">
             <label class="custom_lanel layui-form-label">第一笔支付<br/>金额</label>
             <div class="layui-input-inline">
-                <input type="text" name="first_pay_fee" placeholder="请输入第一笔支付金额" autocomplete="off" class="layui-input" maxlength="50">
+                <input type="text" name="first_pay_fee" placeholder="请输入第一笔支付金额" autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.firstPayFee}">
             </div>
 
             <label class="custom_lanel layui-form-label">第一笔支付<br/>时间</label>
             <div class="layui-input-inline">
-                <input type="text" name ="first_pay_date" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
+                <input type="text" name ="first_pay_date" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true" th:value="${data !=null}?${data.firstPayDate}">
             </div>
 
             <label class="layui-form-label"></label>
             <div class="layui-input-inline">
-                <input type="checkbox" name="is_three_contract" title="是否三方合同" value="1" checked>
+                <input type="checkbox" name="is_three_contract" title="是否三方合同" value="1" checked = "checked" th:checked="${(data != null and data.isThreeContract=='1') or data==null}">
             </div>
 
         </div>
@@ -115,12 +119,12 @@
             <label class="custom_lanel layui-form-label">第二笔支付<br/>金额</label>
             <div class="layui-input-inline">
                 <input type="text" name="second_pay_fee" placeholder="请输入第二笔支付金额"
-                       autocomplete="off" class="layui-input" maxlength="50">
+                       autocomplete="off" class="layui-input" maxlength="50" th:value="${data!=null}?${data.secondPayFee}">
             </div>
 
             <label class="custom_lanel layui-form-label">第二笔支付<br/>时间</label>
             <div class="layui-input-inline">
-                <input type="text" name="second_pay_date" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
+                <input type="text" name="second_pay_date" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true" th:value="${data!=null}?${data.secondPayDate}">
             </div>
 
         </div>
@@ -128,12 +132,12 @@
         <div class="layui-form-item">
             <label class="custom_lanel layui-form-label">第三笔支付<br/>金额</label>
             <div class="layui-input-inline" maxlength="50">
-                <input type="text" name="third_pay_fee" placeholder="请输入第三笔支付金额" autocomplete="off" class="layui-input">
+                <input type="text" name="third_pay_fee" placeholder="请输入第三笔支付金额" autocomplete="off" class="layui-input" th:value="${data!=null}?${data.thirdPayFee}">
             </div>
 
             <label class="custom_lanel layui-form-label">第三笔支付<br/>时间</label>
             <div class="layui-input-inline">
-                <input type="text" name="third_pay_date" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true">
+                <input type="text" name="third_pay_date" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true" th:value="${data!=null}?${data.thirdPayDate}">
             </div>
         </div>
 
@@ -142,14 +146,14 @@
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">备注</label>
                 <div class="layui-input-block">
-                    <textarea name="note" placeholder="请输入内容" class="layui-textarea" maxlength="200"></textarea>
+                    <textarea name="note" placeholder="请输入内容" class="layui-textarea" maxlength="200" th:text="${data!=null}?${data.note}"></textarea>
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn layui-btn-primary" id="cancel">取消</button>
-                    <button class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
+                    <button class="layui-btn" lay-submit lay-filter="formDemo" th:text="${data!=null}?'修改':'增加'">增加</button>
                 </div>
             </div>
         </div>
@@ -163,16 +167,31 @@
         //监听提交
         form.on('submit(formDemo)', function (data) {
             var datas = data.field;
+            var type = datas._method;
+            var commitType;
+            if(type == 'put'){
+                commitType = 'put'
+            }else{
+                commitType = 'post'
+            }
             $.ajax({
                 url:"/addServiceFee",
                 data: datas,
-                type: "POST",
+                type: commitType,
                 dataType: "json",
-                success: function (msg) {
+                success: function (msg,res) {
                     if (msg === 1) {
                         layer.msg('增加成功', {
                             anim:6,
                             time: 2000
+                        },function () {
+                            parent.location.reload();
+                        });
+                    }
+                    if(res!="" && res==="success"){
+                        layer.msg('修改成功', {
+                            anim:6,
+                            time: 5000
                         },function () {
                             parent.location.reload();
                         });

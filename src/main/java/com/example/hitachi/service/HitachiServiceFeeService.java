@@ -47,5 +47,15 @@ public class HitachiServiceFeeService {
     }
 
 
+    public HitachiServiceFeeEntity getServiceFeeDataByKey(String uuid){
+        return hitachiServiceFeeMapper.getServiceFeeDataByKey(uuid);
+
+    }
+
+    public int updateServiceFee(Map<String,Object> params){
+        return hitachiServiceFeeMapper.updateServiceFee(params);
+    }
+
+
 
 }

@@ -1,6 +1,7 @@
 package com.example.hitachi.controller;
 
 
+import com.example.hitachi.entity.HitachiServiceFeeEntity;
 import com.example.hitachi.service.HitachiServiceFeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -88,6 +89,22 @@ public class HitachiServiceFeeController {
     public String batchDeleteServiceFee(@RequestBody List<String> list){
         hitachiServiceFeeService.batchDeleteServiceFee(list);
         return "redirect:/getServiceFeeInfo";
+    }
+
+    @GetMapping(value = "/editServiceFeeBefore")
+    public String editServiceFeeBefore(@RequestParam(name = "uuid") String uuid,Model model){
+        HitachiServiceFeeEntity obj = hitachiServiceFeeService.getServiceFeeDataByKey(uuid);
+        model.addAttribute("data",obj);
+        return "/hitachi/add";
+    }
+
+
+    @PutMapping(value = "/addServiceFee")
+    @ResponseBody
+    public int updateServiceFee(@RequestParam Map<String ,Object> data,Model model){
+        model.addAttribute("update","success");
+        return hitachiServiceFeeService.updateServiceFee(data);
+
     }
 
 }

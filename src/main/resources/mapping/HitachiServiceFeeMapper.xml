@@ -35,6 +35,10 @@
         FROM
             HITACHI_SERVE_FEE SF
         WHERE SF.SHOW_YN = 'Y'
+        <if test='uuid != "" and uuid != null '>
+            AND SF.UUID = #{uuid}
+        </if>
+
         <if test='contract_no != "" and contract_no !=null '>
             AND SF.CONTRACT_NO LIKE '%' #{contract_no} '%'
         </if>
@@ -120,6 +124,55 @@
         </foreach>
 
     </update>
+
+
+    <select id="getServiceFeeDataByKey" resultType="com.example.hitachi.entity.HitachiServiceFeeEntity">
+        SELECT
+            SF.UUID,
+            SF.CONTRACT_NO,
+            SF.CONTRACT_BUYER,
+            SF.USE_COMPANY,
+            SF.COMPANY_NAME,
+            SF.SERVE_FEE_CASH,
+            SF.CONTRACT_LOAN_TOTAL,
+            SF.SEND_COMPANY_DATE,
+            SF.GET_CONFIRM_DATE,
+            SF.PERSON_LIABLE,
+            SF.FIRST_PAY_FEE,
+            SF.FIRST_PAY_DATE,
+            SF.IS_THREE_CONTRACT,
+            SF.SECOND_PAY_FEE,
+            SF.SECOND_PAY_DATE,
+            SF.THIRD_PAY_FEE,
+            SF.THIRD_PAY_DATE,
+            SF.NOTE
+        FROM
+            HITACHI_SERVE_FEE SF
+        WHERE SF.SHOW_YN = 'Y' AND SF.UUID = #{uuid}
+    </select>
+
+    <update id="updateServiceFee" parameterType="HitachiServiceFeeEntity">
+        UPDATE HITACHI_SERVE_FEE SF
+            SET CONTRACT_NO = #{contract_no},
+            CONTRACT_BUYER = #{contract_buyer},
+            USE_COMPANY = #{use_company},
+            COMPANY_NAME = #{company_name},
+            SERVE_FEE_CASH = #{serve_fee_cash},
+            CONTRACT_LOAN_TOTAL = #{contract_loan_total},
+            SEND_COMPANY_DATE = #{send_company_date},
+            GET_CONFIRM_DATE = #{get_confirm_date},
+            PERSON_LIABLE = #{person_liable},
+            FIRST_PAY_FEE = #{first_pay_fee},
+            FIRST_PAY_DATE = #{first_pay_date},
+            IS_THREE_CONTRACT = #{is_three_contract},
+            SECOND_PAY_FEE = #{second_pay_fee},
+            SECOND_PAY_DATE = #{second_pay_date},
+            THIRD_PAY_FEE = #{third_pay_fee},
+            THIRD_PAY_DATE = #{third_pay_date},
+            NOTE = #{note}
+        WHERE SF.UUID = #{uuid}
+    </update>
+
 
 
 </mapper>

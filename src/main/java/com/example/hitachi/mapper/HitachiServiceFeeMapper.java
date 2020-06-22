@@ -19,5 +19,9 @@ public interface HitachiServiceFeeMapper {
 
     int batchDeleteServiceFee(List<String> list);
 
+    HitachiServiceFeeEntity getServiceFeeDataByKey(@Param(value = "uuid") String uuid);
+
+    int updateServiceFee(Map<String,Object> params);
+
 
 }

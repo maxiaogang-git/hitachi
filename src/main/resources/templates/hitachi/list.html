@@ -263,7 +263,14 @@
 
                     });
                 } else if(obj.event === 'edit'){
-                    layer.alert('编辑行：<br>'+ JSON.stringify(data))
+                    var uuid = data.uuid;
+                    layer.open({
+                        type: 2,
+                        content: '/editServiceFeeBefore/'+'?uuid='+ uuid,
+                        area: ['1100px','630px'],
+                        title: '修改服务费'
+
+                    })
                 }
             });
 
