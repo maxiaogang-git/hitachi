@@ -101,9 +101,8 @@ public class HitachiServiceFeeController {
 
     @PutMapping(value = "/addServiceFee")
     @ResponseBody
-    public int updateServiceFee(@RequestParam Map<String ,Object> data,Model model){
-        model.addAttribute("update","success");
-        return hitachiServiceFeeService.updateServiceFee(data);
+    public int updateServiceFee(@RequestParam Map<String ,Object> params){
+        return hitachiServiceFeeService.updateServiceFee(params);
 
     }
 

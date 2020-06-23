@@ -168,40 +168,50 @@
         form.on('submit(formDemo)', function (data) {
             var datas = data.field;
             var type = datas._method;
-            var commitType;
             if(type == 'put'){
-                commitType = 'put'
-            }else{
-                commitType = 'post'
-            }
-            $.ajax({
-                url:"/addServiceFee",
-                data: datas,
-                type: commitType,
-                dataType: "json",
-                success: function (msg,res) {
-                    if (msg === 1) {
-                        layer.msg('增加成功', {
-                            anim:6,
-                            time: 2000
-                        },function () {
-                            parent.location.reload();
-                        });
-                    }
-                    if(res!="" && res==="success"){
-                        layer.msg('修改成功', {
-                            anim:6,
-                            time: 5000
-                        },function () {
-                            parent.location.reload();
-                        });
-                    }
-                },
-                error: function (error) {
+                $.ajax({
+                    url:"/addServiceFee",
+                    data: datas,
+                    type: 'put',
+                    dataType: "json",
+                    success: function (msg) {
+                        if (msg === 1) {
+                            layer.msg('修改成功', {
+                                anim:6,
+                                time: 2000
+                            },function () {
+                                parent.location.reload();
+                            });
+                        }
+                    },
+                    error: function (error) {
 
-                }
-            });
-            return false;
+                    }
+                });
+                return false;
+
+            }else{
+                $.ajax({
+                    url:"/addServiceFee",
+                    data: datas,
+                    type: 'post',
+                    dataType: "json",
+                    success: function (msg,res) {
+                        if (msg === 1) {
+                            layer.msg('增加成功', {
+                                anim:6,
+                                time: 2000
+                            },function () {
+                                parent.location.reload();
+                            });
+                        }
+                    },
+                    error: function (error) {
+
+                    }
+                });
+                return false;
+            }
         });
 
 
