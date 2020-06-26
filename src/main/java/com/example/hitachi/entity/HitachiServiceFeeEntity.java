@@ -36,6 +36,14 @@ public class HitachiServiceFeeEntity {
 
     private String thirdPayDate;
 
+    private String fourPayFee;
+
+    private String fourPayDate;
+
+    private String fivePayFee;
+
+    private String fivePayDate;
+
     private String note;
 
     public String getUuid() {
@@ -174,6 +182,39 @@ public class HitachiServiceFeeEntity {
         this.thirdPayDate = thirdPayDate;
     }
 
+
+    public String getFourPayFee() {
+        return fourPayFee;
+    }
+
+    public void setFourPayFee(String fourPayFee) {
+        this.fourPayFee = fourPayFee;
+    }
+
+    public String getFourPayDate() {
+        return fourPayDate;
+    }
+
+    public void setFourPayDate(String fourPayDate) {
+        this.fourPayDate = fourPayDate;
+    }
+
+    public String getFivePayFee() {
+        return fivePayFee;
+    }
+
+    public void setFivePayFee(String fivePayFee) {
+        this.fivePayFee = fivePayFee;
+    }
+
+    public String getFivePayDate() {
+        return fivePayDate;
+    }
+
+    public void setFivePayDate(String fivePayDate) {
+        this.fivePayDate = fivePayDate;
+    }
+
     public String getNote() {
         return note;
     }
@@ -202,6 +243,10 @@ public class HitachiServiceFeeEntity {
                 ", secondPayDate=" + secondPayDate +
                 ", thirdPayFee=" + thirdPayFee +
                 ", thirdPayDate=" + thirdPayDate +
+                ", fourPayFee=" + fourPayFee +
+                ", fourPayDate=" + fourPayDate +
+                ", fivePayFee=" + fivePayFee +
+                ", fivePayDate=" + fivePayDate +
                 ", note='" + note + '\'' +
                 '}';
     }

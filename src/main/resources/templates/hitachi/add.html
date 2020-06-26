@@ -89,9 +89,9 @@
                 <input type="text" autocomplete="off" name="get_confirm_date" class="add_date layui-input" placeholder="请选择日期" readonly="true" th:value="${data !=null}?${data.getConfirmDate}">
             </div>
 
-            <label class="custom_lanel layui-form-label">合同贷款<br/>总额</label>
+            <label class="custom_lanel layui-form-label">合同货款<br/>总额</label>
             <div class="layui-input-inline">
-                <input type="text" name="contract_loan_total" required lay-verify="required" placeholder="请输入合同贷款总额"
+                <input type="text" name="contract_loan_total" required lay-verify="required" placeholder="请输入合同货款总额"
                        autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.contractLoanTotal}">
             </div>
 
@@ -138,6 +138,30 @@
             <label class="custom_lanel layui-form-label">第三笔支付<br/>时间</label>
             <div class="layui-input-inline">
                 <input type="text" name="third_pay_date" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true" th:value="${data!=null}?${data.thirdPayDate}">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="custom_lanel layui-form-label">第四笔支付<br/>金额</label>
+            <div class="layui-input-inline" maxlength="50">
+                <input type="text" name="four_pay_fee" placeholder="请输入第四笔支付金额" autocomplete="off" class="layui-input" th:value="${data!=null}?${data.fourPayFee}">
+            </div>
+
+            <label class="custom_lanel layui-form-label">第四笔支付<br/>时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="four_pay_date" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true" th:value="${data!=null}?${data.fourPayDate}">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="custom_lanel layui-form-label">第五笔支付<br/>金额</label>
+            <div class="layui-input-inline" maxlength="50">
+                <input type="text" name="five_pay_fee" placeholder="请输入第五笔支付金额" autocomplete="off" class="layui-input" th:value="${data!=null}?${data.fivePayFee}">
+            </div>
+
+            <label class="custom_lanel layui-form-label">第五笔支付<br/>时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="five_pay_date" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true" th:value="${data!=null}?${data.fivePayDate}">
             </div>
         </div>
 

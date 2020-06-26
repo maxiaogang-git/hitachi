@@ -196,6 +196,10 @@
                     ,{field:'secondPayDate', title: '第二笔支付时间', sort: true, width:150}
                     ,{field:'thirdPayFee', title: '第三笔支付金额', width:150}
                     ,{field:'thirdPayDate', title: '第三笔支付时间', sort: true, width:150}
+                    ,{field:'fourPayFee', title: '第四笔支付金额',width:150}
+                    ,{field:'fourPayDate', title: '第四笔支付时间', sort: true, width:150}
+                    ,{field:'fivePayFee', title: '第五笔支付金额',width:150}
+                    ,{field:'fivePayDate', title: '第五笔支付时间', sort: true, width:150}
                     ,{field:'note', title: '备注', width:150,align:'center',hide:true}
                     ,{field:'isThreeContract', title: '三方合同', width:100,align:'center', templet:function (result) {
                         if(result.isThreeContract == '1'){
@@ -267,7 +271,7 @@
                     layer.open({
                         type: 2,
                         content: '/editServiceFeeBefore/'+'?uuid='+ uuid,
-                        area: ['1100px','630px'],
+                        area: ['1100px','700px'],
                         title: '修改服务费'
 
                     })
@@ -327,7 +331,7 @@
                     layer.open({
                         type: 2,
                         content: '/addServiceFeeBefore',
-                        area: ['1100px','630px'],
+                        area: ['1100px','700px'],
                         title: '增加服务费'
 
                     })

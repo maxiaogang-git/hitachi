@@ -31,6 +31,10 @@
             SF.SECOND_PAY_DATE,
             SF.THIRD_PAY_FEE,
             SF.THIRD_PAY_DATE,
+            SF.FOUR_PAY_FEE,
+            SF.FOUR_PAY_DATE,
+            SF.FIVE_PAY_FEE,
+            SF.FIVE_PAY_DATE,
             SF.NOTE
         FROM
             HITACHI_SERVE_FEE SF
@@ -91,6 +95,11 @@
                 SECOND_PAY_DATE,
                 THIRD_PAY_FEE,
                 THIRD_PAY_DATE,
+                FOUR_PAY_FEE,
+                FOUR_PAY_DATE,
+                FIVE_PAY_FEE,
+                FIVE_PAY_DATE,
+                ADD_DATE,
                 NOTE,
                 SHOW_YN)
                 VALUES(
@@ -111,6 +120,11 @@
                 #{second_pay_date},
                 #{third_pay_fee},
                 #{third_pay_date},
+                #{four_pay_fee},
+                #{four_pay_date},
+                #{five_pay_fee},
+                #{five_pay_date},
+                NOW(),
                 #{note},
                 'Y')
 
@@ -145,6 +159,10 @@
             SF.SECOND_PAY_DATE,
             SF.THIRD_PAY_FEE,
             SF.THIRD_PAY_DATE,
+            SF.FOUR_PAY_FEE,
+            SF.FOUR_PAY_DATE,
+            SF.FIVE_PAY_FEE,
+            SF.FIVE_PAY_DATE,
             SF.NOTE
         FROM
             HITACHI_SERVE_FEE SF
@@ -169,6 +187,11 @@
             SECOND_PAY_DATE = #{second_pay_date},
             THIRD_PAY_FEE = #{third_pay_fee},
             THIRD_PAY_DATE = #{third_pay_date},
+            FOUR_PAY_FEE = #{four_pay_fee},
+            FOUR_PAY_DATE = #{four_pay_date},
+            FIVE_PAY_FEE = #{five_pay_fee},
+            FIVE_PAY_DATE = #{five_pay_date},
+            UPDATE_DATE = NOW(),
             NOTE = #{note}
         WHERE SF.UUID = #{uuid}
     </update>
