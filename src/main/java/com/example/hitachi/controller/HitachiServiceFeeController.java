@@ -91,6 +91,12 @@ public class HitachiServiceFeeController {
         return "redirect:/getServiceFeeInfo";
     }
 
+    /**
+     * 跳转至修改页面
+     * @param uuid
+     * @param model
+     * @return
+     */
     @GetMapping(value = "/editServiceFeeBefore")
     public String editServiceFeeBefore(@RequestParam(name = "uuid") String uuid,Model model){
         HitachiServiceFeeEntity obj = hitachiServiceFeeService.getServiceFeeDataByKey(uuid);
@@ -99,6 +105,11 @@ public class HitachiServiceFeeController {
     }
 
 
+    /**
+     * 修改服务费信息
+     * @param params
+     * @return
+     */
     @PutMapping(value = "/addServiceFee")
     @ResponseBody
     public int updateServiceFee(@RequestParam Map<String ,Object> params){
