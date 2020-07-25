@@ -25,7 +25,7 @@ public class HitachiServiceFeeController {
      */
     @GetMapping(value = "/addServiceFeeBefore")
     public String addServiceFeeBefore(){
-        return "/hitachi/add";
+        return "hitachi/add";
     }
 
 
@@ -101,7 +101,7 @@ public class HitachiServiceFeeController {
     public String editServiceFeeBefore(@RequestParam(name = "uuid") String uuid,Model model){
         HitachiServiceFeeEntity obj = hitachiServiceFeeService.getServiceFeeDataByKey(uuid);
         model.addAttribute("data",obj);
-        return "/hitachi/add";
+        return "hitachi/add";
     }
 
 
