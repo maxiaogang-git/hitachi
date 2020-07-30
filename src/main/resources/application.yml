@@ -15,6 +15,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
+#    prod配置
+#    url: jdbc:mysql://localhost:3306/hitachi?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT
+#    dev配置
     url: jdbc:mysql://192.168.32.128:3306/Hitachi?useUnicode=true&characterEncoding=utf8
     username: root
     password: 123456

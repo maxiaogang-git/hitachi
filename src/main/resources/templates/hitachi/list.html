@@ -70,6 +70,9 @@
             top: -10px;
         }
 
+        .tr_bj_color {
+            background-color: #f0f0f0;
+        }
 
 
     </style>
@@ -154,9 +157,13 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container demoTable" >
-        <button class="layui-btn" id="add" data-type="add">增加</button>
-        <button class="layui-btn" id="batchDelete" data-type="batchDelData">删除</button>
+        <button class="layui-btn layui-btn-sm" id="add" data-type="add">增加</button>
+        <button class="layui-btn layui-btn-sm" id="batchDelete" data-type="batchDelData">删除</button>
+        <button class="layui-btn layui-btn-sm" id="excelDown" data-type="excelDown">
+            <i class="layui-icon layui-icon-export"></i>EXCEL下载
+        </button>
     </div>
+
 </script>
 
 <script>
@@ -182,9 +189,9 @@
                 ,cols: [ [
                      {checkbox: true, fixed: true}
                     ,{title: '序号', width:50, fixed: true,type: 'numbers'}
-                    ,{field:'contractNo', title: '合同编号', width:100}
-                    ,{field:'contractBuyer', title: '合同买方', width:120}
-                    ,{field:'useCompany', title: '使用单位', width:120}
+                    ,{field:'contractNo', title: '合同编号', width:120,fixed: true}
+                    ,{field:'contractBuyer', title: '合同买方', width:150}
+                    ,{field:'useCompany', title: '使用单位', width:150}
                     ,{field:'personLiable', title: '责任人', width:100}
                     ,{field:'sendCompanyDate', title: '寄总公司日期', width:130,sort:true}
                     ,{field:'getConfirmDate', title: '收到确认书日期', width:150,sort:true}
@@ -196,10 +203,10 @@
                     ,{field:'secondPayDate', title: '第二笔支付时间', sort: true, width:150}
                     ,{field:'thirdPayFee', title: '第三笔支付金额', width:150}
                     ,{field:'thirdPayDate', title: '第三笔支付时间', sort: true, width:150}
-                    ,{field:'fourPayFee', title: '第四笔支付金额',width:150}
-                    ,{field:'fourPayDate', title: '第四笔支付时间', sort: true, width:150}
-                    ,{field:'fivePayFee', title: '第五笔支付金额',width:150}
-                    ,{field:'fivePayDate', title: '第五笔支付时间', sort: true, width:150}
+                    ,{field:'fourPayFee', title: '第四笔支付金额',width:150,hide:true}
+                    ,{field:'fourPayDate', title: '第四笔支付时间', sort: true, width:150,hide:true}
+                    ,{field:'fivePayFee', title: '第五笔支付金额',width:150,hide:true}
+                    ,{field:'fivePayDate', title: '第五笔支付时间', sort: true, width:150,hide:true}
                     ,{field:'note', title: '备注', width:150,align:'center',hide:true}
                     ,{field:'isThreeContract', title: '三方合同', width:100,align:'center', templet:function (result) {
                         if(result.isThreeContract == '1'){
@@ -230,7 +237,7 @@
                 ,id: 'service_fee_reload'
                 ,page:true
                 ,limit:10
-                ,limits:[10,20,30,40,50]
+                ,limits:[10,20,30,50,80,100]
                 ,height: 500
             });
 
@@ -239,6 +246,38 @@
             table.on('checkbox(service_fee_table_filter)', function(obj){
                 console.log(obj)
             });
+
+            //选中checkbox改变背景色
+            table.on('checkbox(service_fee_table_filter)', function (obj) {
+                //全选时
+                if (obj.type == "all") {
+                    if (obj.checked) {//全选中
+                        var checkStatus = table.checkStatus('service_fee_reload');
+                        var sdata = checkStatus.data;
+                        if (sdata.length > 0) {//渲染背景颜色
+                            $(".layui-table-body .layui-table tr").each(function () {
+                                $(this).addClass("tr_bj_color");
+                            })
+                        }
+                    }
+                    else {//全部不选
+                        $(".layui-table-body .layui-table tr").each(function () {
+                            $(this).removeClass("tr_bj_color");
+                        })
+                    }
+                }
+                else {//单选
+                    var checkStatus = table.checkStatus('service_fee_reload');
+                    var sdata = checkStatus.data;
+                    if (obj.checked) {//选中
+                        obj.tr.addClass('tr_bj_color');
+                    }
+                    else {//取消选中
+                        obj.tr.removeClass('tr_bj_color');
+                    }
+                }
+            });
+
             //监听工具条 
             table.on('tool(service_fee_table_filter)', function(obj){
                 var data = obj.data;
@@ -372,8 +411,9 @@
                     $('#receive_start_date').val('');
                     $('#receive_end_date').val('');
                     location.reload();
-
-
+                }
+                ,excelDown:function () {
+                    alert('aaa');
                 }
             };
 
