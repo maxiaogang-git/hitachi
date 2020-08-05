@@ -74,6 +74,11 @@
             background-color: #f0f0f0;
         }
 
+        .demoTable{
+            position: relative;
+            top: 15px;
+        }
+
 
     </style>
 
@@ -143,6 +148,14 @@
 
                 </div>
 
+            <div class="layui-btn-container demoTable">
+                <button class="layui-btn layui-btn-sm" id="add" data-type="add">增加</button>
+                <button class="layui-btn layui-btn-sm" id="batchDelete" data-type="batchDelData">删除</button>
+                <!--<button class="layui-btn layui-btn-sm" id="excelDown" data-type="excelDown">-->
+                    <!--<i class="layui-icon layui-icon-export"></i>EXCEL下载-->
+                <!--</button>-->
+            </div>
+
             <table class="layui-table" id="setvice_fee_table" lay-filter="service_fee_table_filter"></table>
         </div>
     </div>
@@ -155,16 +168,16 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container demoTable" >
-        <button class="layui-btn layui-btn-sm" id="add" data-type="add">增加</button>
-        <button class="layui-btn layui-btn-sm" id="batchDelete" data-type="batchDelData">删除</button>
-        <button class="layui-btn layui-btn-sm" id="excelDown" data-type="excelDown">
-            <i class="layui-icon layui-icon-export"></i>EXCEL下载
-        </button>
-    </div>
+<!--<script type="text/html" id="toolbarDemo">-->
+    <!--<div class="layui-btn-container demoTable">-->
+        <!--<button class="layui-btn layui-btn-sm" id="add" data-type="add">增加</button>-->
+        <!--<button class="layui-btn layui-btn-sm" id="batchDelete" data-type="batchDelData">删除</button>-->
+        <!--<button class="layui-btn layui-btn-sm" id="excelDown" data-type="excelDown">-->
+            <!--<i class="layui-icon layui-icon-export"></i>EXCEL下载-->
+        <!--</button>-->
+    <!--</div>-->
 
-</script>
+<!--</script>-->
 
 <script>
 
@@ -178,7 +191,7 @@
             table.render({
                 elem: '#setvice_fee_table'
                 ,url: '/getServiceFeeInfo'
-                ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+//                ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
 //                ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
 //                    title: '提示'
 //                    ,layEvent: 'LAYTABLE_TIPS'
@@ -203,11 +216,11 @@
                     ,{field:'secondPayDate', title: '第二笔支付时间', sort: true, width:150}
                     ,{field:'thirdPayFee', title: '第三笔支付金额', width:150}
                     ,{field:'thirdPayDate', title: '第三笔支付时间', sort: true, width:150}
-                    ,{field:'fourPayFee', title: '第四笔支付金额',width:150,hide:true}
-                    ,{field:'fourPayDate', title: '第四笔支付时间', sort: true, width:150,hide:true}
-                    ,{field:'fivePayFee', title: '第五笔支付金额',width:150,hide:true}
-                    ,{field:'fivePayDate', title: '第五笔支付时间', sort: true, width:150,hide:true}
-                    ,{field:'note', title: '备注', width:150,align:'center',hide:true}
+                    ,{field:'fourPayFee', title: '第四笔支付金额',width:150}
+                    ,{field:'fourPayDate', title: '第四笔支付时间', sort: true, width:150}
+                    ,{field:'fivePayFee', title: '第五笔支付金额',width:150}
+                    ,{field:'fivePayDate', title: '第五笔支付时间', sort: true, width:150}
+                    ,{field:'note', title: '备注', width:150,align:'center'}
                     ,{field:'isThreeContract', title: '三方合同', width:100,align:'center', templet:function (result) {
                         if(result.isThreeContract == '1'){
                             return isThreeContract='<label style="color: #009688"><b>是</b></label>'
