@@ -36,13 +36,13 @@
 
             <label class="layui-form-label">合同买方</label>
             <div class="layui-input-inline">
-                <input type="text" name="contract_buyer" required lay-verify="required" placeholder="请输入合同买方"
+                <input type="text" name="contract_buyer" placeholder="请输入合同买方"
                        autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.contractBuyer}">
             </div>
 
             <label class="layui-form-label">使用单位</label>
             <div class="layui-input-inline">
-                <input type="text" name="use_company" required lay-verify="required" placeholder="请输入使用单位"
+                <input type="text" name="use_company" placeholder="请输入使用单位"
                        autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.useCompany}">
             </div>
         </div>
@@ -50,13 +50,13 @@
         <div class="layui-form-item">
             <label class="layui-form-label">公司名称</label>
             <div class="layui-input-inline">
-                <input type="text" name="company_name" required lay-verify="required" placeholder="请输入公司名称" autocomplete="off"
+                <input type="text" name="company_name" placeholder="请输入公司名称" autocomplete="off"
                        class="layui-input" maxlength="50" th:value="${data !=null}?${data.companyName}">
             </div>
 
             <label class="layui-form-label">服务费金额</label>
             <div class="layui-input-inline">
-                <input type="text" name="serve_fee_cash" required lay-verify="required" placeholder="请输入服务费金额"
+                <input type="text" name="serve_fee_cash" placeholder="请输入服务费金额"
                        autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.serveFeeCash}">
             </div>
 
@@ -91,7 +91,7 @@
 
             <label class="custom_lanel layui-form-label">合同货款<br/>总额</label>
             <div class="layui-input-inline">
-                <input type="text" name="contract_loan_total" required lay-verify="required" placeholder="请输入合同货款总额"
+                <input type="text" name="contract_loan_total" placeholder="请输入合同货款总额"
                        autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.contractLoanTotal}">
             </div>
 
