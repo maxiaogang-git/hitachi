@@ -310,7 +310,7 @@
                             success:function (result) {
                                 layer.msg('删除成功！',{anim:6,time:2000},function () {
                                     layer.close(index);
-                                    location.reload();
+                                    parent.layui.table.reload('service_fee_reload');
                                 });
 
                             },
@@ -355,7 +355,8 @@
                                 success:function (result) {
                                     layer.msg('删除成功！',{anim:6,time:2000},function () {
                                         layer.close(index);
-                                        location.reload();
+                                        parent.layui.table.reload('service_fee_reload');
+
                                     });
 
                                 },
