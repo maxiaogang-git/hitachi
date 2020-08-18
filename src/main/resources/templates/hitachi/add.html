@@ -229,7 +229,10 @@
                                 anim:6,
                                 time: 2000
                             },function () {
-                                parent.location.reload();
+                                parent.layui.table.reload('service_fee_reload');
+                                //先得到当前iframe层的索引
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);
                             });
                         }
                     },
