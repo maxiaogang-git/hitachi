@@ -24,7 +24,9 @@ public class HitachiServiceFeeController {
      * @return
      */
     @GetMapping(value = "/addServiceFeeBefore")
-    public String addServiceFeeBefore(){
+    public String addServiceFeeBefore(@RequestParam(name = "uuid",defaultValue = "") String uuid,Model model){
+        HitachiServiceFeeEntity obj = hitachiServiceFeeService.getServiceFeeDataByKey(uuid);
+        model.addAttribute("data",obj);
         return "hitachi/add";
     }
 
@@ -58,20 +60,16 @@ public class HitachiServiceFeeController {
                                                 @RequestParam(name = "person_liable",defaultValue = "") String person_liable,
                                                 @RequestParam(name = "is_three_contract",defaultValue = "") String is_three_contract,
                                                 @RequestParam(name = "send_start_date",defaultValue = "") String send_start_date,
-                                                @RequestParam(name = "send_end_date",defaultValue = "") String send_end_date,
-                                                @RequestParam(name = "receive_start_date",defaultValue = "") String receive_start_date,
-                                                @RequestParam(name = "receive_end_date",defaultValue = "") String receive_end_date
+                                                @RequestParam(name = "receive_start_date",defaultValue = "") String receive_start_date
                                                 ){
         Map<String,Object> params = new HashMap<>();
-        params.put("contract_no",contract_no);
-        params.put("contract_buyer",contract_buyer);
-        params.put("use_company",use_company);
-        params.put("person_liable",person_liable);
+        params.put("contract_no",contract_no.trim());
+        params.put("contract_buyer",contract_buyer.trim());
+        params.put("use_company",use_company.trim());
+        params.put("person_liable",person_liable.trim());
         params.put("is_three_contract",is_three_contract);
         params.put("send_start_date",send_start_date);
-        params.put("send_end_date",send_end_date);
         params.put("receive_start_date",receive_start_date);
-        params.put("receive_end_date",receive_end_date);
         params.put("pageNo",currNo);
         params.put("pageSize",currSize);
         Map<String,Object> resMap = hitachiServiceFeeService.getServiceFeeInfo(params);
@@ -92,7 +90,7 @@ public class HitachiServiceFeeController {
     }
 
     /**
-     * 跳转至修改页面
+     * 跳转至修改上面table页面
      * @param uuid
      * @param model
      * @return
@@ -101,12 +99,12 @@ public class HitachiServiceFeeController {
     public String editServiceFeeBefore(@RequestParam(name = "uuid") String uuid,Model model){
         HitachiServiceFeeEntity obj = hitachiServiceFeeService.getServiceFeeDataByKey(uuid);
         model.addAttribute("data",obj);
-        return "hitachi/add";
+        return "hitachi/edit_parent";
     }
 
 
     /**
-     * 修改服务费信息
+     * 修改上面table信息
      * @param params
      * @return
      */
@@ -115,6 +113,68 @@ public class HitachiServiceFeeController {
     public int updateServiceFee(@RequestParam Map<String ,Object> params){
         return hitachiServiceFeeService.updateServiceFee(params);
 
+    }
+
+    /**
+     * 查看服务费详情
+     * @param model
+     * @param currNo
+     * @param currSize
+     * @return
+     */
+    @GetMapping(value = "/getServiceFeeInfoChild")
+    public String getServiceFeeInfoChild(Model model,
+                                                @RequestParam(name = "currNo",defaultValue = "1") int currNo,
+                                                @RequestParam(name = "currSize",defaultValue = "10") int currSize,
+                                                @RequestParam(name = "contractNo",defaultValue = "") String contractNo,
+                                                @RequestParam(name = "uuid") String uuid
+
+    ){
+        Map<String,Object> params = new HashMap<>();
+        params.put("uuid",uuid);
+        params.put("contract_no",contractNo.trim());
+        params.put("pageNo",currNo);
+        params.put("pageSize",currSize);
+        Map<String,Object> resMap = hitachiServiceFeeService.getServiceFeeInfoChild(params);
+        model.addAttribute("resMap",resMap);
+        return "hitachi/details";
+    }
+
+    /**
+     * 跳转至修改下面table页面
+     * @param uuid
+     * @param model
+     * @return
+     */
+    @GetMapping(value = "/editServiceFeeChildBefore")
+    public String editServiceFeeChildBefore(@RequestParam(name = "uuid") String uuid,Model model){
+        HitachiServiceFeeEntity obj = hitachiServiceFeeService.getServiceFeeChildDataByKey(uuid);
+        model.addAttribute("data",obj);
+        return "hitachi/edit_child";
+    }
+
+    /**
+     * 修改下面table信息
+     * @param params
+     * @return
+     */
+    @PutMapping(value = "/addServiceFeeChild")
+    @ResponseBody
+    public int updateServiceFeeChild(@RequestParam Map<String ,Object> params){
+        return hitachiServiceFeeService.updateServiceFeeChild(params);
+
+    }
+
+
+    /**
+     * 删除下面table数据
+     * @param list
+     * @return
+     */
+    @PostMapping(value = "/deleteServiceFeeChild")
+    @ResponseBody
+    public int deleteServiceFeeChild(@RequestBody List<String> list){
+        return hitachiServiceFeeService.deleteServiceFeeChild(list);
     }
 
 }

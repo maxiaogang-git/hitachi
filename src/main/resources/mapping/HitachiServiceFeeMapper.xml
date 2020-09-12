@@ -14,31 +14,19 @@
 
     <sql id="baseServiceFeeData">
         SELECT
-            SF.UUID,
+            MAX(SF.UUID) UUID,
             SF.CONTRACT_NO,
             SF.CONTRACT_BUYER,
             SF.USE_COMPANY,
-            SF.COMPANY_NAME,
-            SF.SERVE_FEE_CASH,
-            SF.CONTRACT_LOAN_TOTAL,
+            SF.PERSON_LIABLE,
             SF.SEND_COMPANY_DATE,
             SF.GET_CONFIRM_DATE,
-            SF.PERSON_LIABLE,
-            SF.FIRST_PAY_FEE,
-            SF.FIRST_PAY_DATE,
+            SF.CONTRACT_LOAN_TOTAL,
             SF.IS_THREE_CONTRACT,
-            SF.SECOND_PAY_FEE,
-            SF.SECOND_PAY_DATE,
-            SF.THIRD_PAY_FEE,
-            SF.THIRD_PAY_DATE,
-            SF.FOUR_PAY_FEE,
-            SF.FOUR_PAY_DATE,
-            SF.FIVE_PAY_FEE,
-            SF.FIVE_PAY_DATE,
-            SF.NOTE
+            NOTE
         FROM
-            HITACHI_SERVE_FEE SF
-        WHERE SF.SHOW_YN = 'Y'
+            HITACHI_SERVE_FEE_COMMON SF
+        WHERE SF.SHOW_YN = 'N'
         <if test='uuid != "" and uuid != null '>
             AND SF.UUID = #{uuid}
         </if>
@@ -58,14 +46,24 @@
         <if test='is_three_contract != "" and is_three_contract != null '>
             AND SF.IS_THREE_CONTRACT LIKE '%' #{is_three_contract} '%'
         </if>
-        <if test='(send_start_date != "" and send_start_date != null) and (send_end_date != "" and send_end_date != null)'>
+        <if test='send_start_date != "" and send_start_date != null'>
             AND SF.SEND_COMPANY_DATE BETWEEN #{send_start_date} AND #{send_end_date}
         </if>
 
-        <if test='(receive_start_date != "" and receive_start_date != null) and (receive_end_date != "" and receive_end_date != null)'>
+        <if test='receive_start_date != "" and receive_start_date != null'>
             AND SF.GET_CONFIRM_DATE BETWEEN #{receive_start_date} AND #{receive_end_date}
         </if>
 
+        GROUP BY
+        SF.CONTRACT_NO,
+        SF.CONTRACT_BUYER,
+        SF.USE_COMPANY,
+        SF.PERSON_LIABLE,
+        SF.SEND_COMPANY_DATE,
+        SF.GET_CONFIRM_DATE,
+        SF.CONTRACT_LOAN_TOTAL,
+        SF.IS_THREE_CONTRACT,
+        SF.NOTE
         ORDER BY SF.SEND_COMPANY_DATE DESC
 
     </sql>
@@ -76,63 +74,89 @@
 
 
 
-    <insert id="addServiceFee" parameterType="HitachiServiceFeeEntity" >
-            INSERT INTO HITACHI_SERVE_FEE(
+    <insert id="addServiceFee" parameterType="java.util.Map" >
+            INSERT INTO HITACHI_SERVE_FEE_COMMON(
                 UUID,
                 CONTRACT_NO,
                 CONTRACT_BUYER,
                 USE_COMPANY,
+                CONTRACT_LOAN_TOTAL,
+                PERSON_LIABLE,
+                IS_THREE_CONTRACT,
                 COMPANY_NAME,
                 SERVE_FEE_CASH,
-                CONTRACT_LOAN_TOTAL,
                 SEND_COMPANY_DATE,
                 GET_CONFIRM_DATE,
-                PERSON_LIABLE,
-                FIRST_PAY_FEE,
-                FIRST_PAY_DATE,
-                IS_THREE_CONTRACT,
-                SECOND_PAY_FEE,
-                SECOND_PAY_DATE,
-                THIRD_PAY_FEE,
-                THIRD_PAY_DATE,
-                FOUR_PAY_FEE,
-                FOUR_PAY_DATE,
-                FIVE_PAY_FEE,
-                FIVE_PAY_DATE,
+                SHOW_YN,
                 ADD_DATE,
-                NOTE,
-                SHOW_YN)
+                NOTE)
                 VALUES(
                 #{uuid},
                 #{contract_no},
                 #{contract_buyer},
                 #{use_company},
+                #{contract_loan_total},
+                #{person_liable},
+                #{is_three_contract},
                 #{company_name},
                 #{serve_fee_cash},
-                #{contract_loan_total},
                 #{send_company_date},
                 #{get_confirm_date},
-                #{person_liable},
-                #{first_pay_fee},
-                #{first_pay_date},
-                #{is_three_contract},
-                #{second_pay_fee},
-                #{second_pay_date},
-                #{third_pay_fee},
-                #{third_pay_date},
-                #{four_pay_fee},
-                #{four_pay_date},
-                #{five_pay_fee},
-                #{five_pay_date},
+                'N',
                 NOW(),
-                #{note},
-                'Y')
+                #{note})
+    </insert>
+
+    <insert id="addServiceFeeChild" parameterType="java.util.Map" >
+        INSERT INTO HITACHI_SERVE_FEE(
+            UUID,
+            CONTRACT_NO,
+            CONTRACT_BUYER,
+            CONTRACT_LOAN_TOTAL,
+            IS_THREE_CONTRACT,
+            COMPANY_NAME,
+            SERVE_FEE_CASH,
+            GET_CONFIRM_DATE,
+            FIRST_PAY_FEE,
+            FIRST_PAY_DATE,
+            SECOND_PAY_FEE,
+            SECOND_PAY_DATE,
+            THIRD_PAY_FEE,
+            THIRD_PAY_DATE,
+            FOUR_PAY_FEE,
+            FOUR_PAY_DATE,
+            FIVE_PAY_FEE,
+            FIVE_PAY_DATE,
+            ADD_DATE,
+            SHOW_YN)
+        VALUES(
+            #{uuid},
+            #{contract_no},
+            #{contract_buyer},
+            #{contract_loan_total},
+            #{is_three_contract},
+            #{company_name},
+            #{serve_fee_cash},
+            #{get_confirm_date},
+            #{first_pay_fee},
+            #{first_pay_date},
+            #{second_pay_fee},
+            #{second_pay_date},
+            #{third_pay_fee},
+            #{third_pay_date},
+            #{four_pay_fee},
+            #{four_pay_date},
+            #{five_pay_fee},
+            #{five_pay_date},
+            NOW(),
+            'N')
 
     </insert>
 
 
+
     <update id="batchDeleteServiceFee" parameterType="java.util.List">
-        UPDATE HITACHI_SERVE_FEE SF SET SHOW_YN = 'N' WHERE UUID IN
+        UPDATE HITACHI_SERVE_FEE_COMMON SF SET SHOW_YN = 'Y' WHERE UUID IN
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
             #{item}
         </foreach>
@@ -146,15 +170,51 @@
             SF.CONTRACT_NO,
             SF.CONTRACT_BUYER,
             SF.USE_COMPANY,
-            SF.COMPANY_NAME,
-            SF.SERVE_FEE_CASH,
-            SF.CONTRACT_LOAN_TOTAL,
+            SF.PERSON_LIABLE,
             SF.SEND_COMPANY_DATE,
             SF.GET_CONFIRM_DATE,
-            SF.PERSON_LIABLE,
+            SF.CONTRACT_LOAN_TOTAL,
+            SF.IS_THREE_CONTRACT,
+            SF.NOTE
+        FROM
+            HITACHI_SERVE_FEE_COMMON SF
+        WHERE SF.SHOW_YN = 'N' AND SF.UUID = #{uuid}
+    </select>
+
+    <update id="updateServiceFee" parameterType="HitachiServiceFeeEntity">
+        UPDATE HITACHI_SERVE_FEE_COMMON SF
+            SET CONTRACT_NO = #{contract_no},
+            CONTRACT_BUYER = #{contract_buyer},
+            USE_COMPANY = #{use_company},
+            PERSON_LIABLE = #{person_liable},
+            SEND_COMPANY_DATE = #{send_company_date},
+            GET_CONFIRM_DATE = #{get_confirm_date},
+            CONTRACT_LOAN_TOTAL = #{contract_loan_total},
+            IS_THREE_CONTRACT = #{is_three_contract},
+            UPDATE_DATE = NOW(),
+            NOTE = #{note}
+        WHERE SF.UUID = #{uuid}
+    </update>
+
+
+
+    <select id="getDataTotalChild" resultType="java.lang.Integer">
+        SELECT COUNT(A.UUID) FROM (<include refid="baseServiceFeeData"/>) A
+    </select>
+
+    <select id="getServiceFeeInfoChild" resultType="com.example.hitachi.entity.HitachiServiceFeeEntity">
+        <include refid="baseServiceFeeDataChild"/>
+        <include refid="pagingSqlChild"/>
+    </select>
+
+    <sql id="baseServiceFeeDataChild">
+        SELECT
+            SF.UUID,
+            SF.CONTRACT_NO,
+            SF.COMPANY_NAME,
+            SF.SERVE_FEE_CASH,
             SF.FIRST_PAY_FEE,
             SF.FIRST_PAY_DATE,
-            SF.IS_THREE_CONTRACT,
             SF.SECOND_PAY_FEE,
             SF.SECOND_PAY_DATE,
             SF.THIRD_PAY_FEE,
@@ -163,26 +223,52 @@
             SF.FOUR_PAY_DATE,
             SF.FIVE_PAY_FEE,
             SF.FIVE_PAY_DATE,
-            SF.NOTE
+            SF.GET_CONFIRM_DATE
         FROM
             HITACHI_SERVE_FEE SF
-        WHERE SF.SHOW_YN = 'Y' AND SF.UUID = #{uuid}
+        WHERE SF.SHOW_YN = 'N'
+
+        <if test='contract_no != "" and contract_no !=null '>
+            AND SF.CONTRACT_NO = #{contract_no}
+        </if>
+
+        ORDER BY SF.GET_CONFIRM_DATE DESC
+
+    </sql>
+
+    <sql id="pagingSqlChild">
+        LIMIT #{pageNo},#{pageSize}
+    </sql>
+
+
+    <select id="getServiceFeeChildDataByKey" resultType="com.example.hitachi.entity.HitachiServiceFeeEntity">
+        SELECT
+            SF.UUID,
+            SF.CONTRACT_NO,
+            SF.COMPANY_NAME,
+            SF.SERVE_FEE_CASH,
+            SF.FIRST_PAY_FEE,
+            SF.FIRST_PAY_DATE,
+            SF.SECOND_PAY_FEE,
+            SF.SECOND_PAY_DATE,
+            SF.THIRD_PAY_FEE,
+            SF.THIRD_PAY_DATE,
+            SF.FOUR_PAY_FEE,
+            SF.FOUR_PAY_DATE,
+            SF.FIVE_PAY_FEE,
+            SF.FIVE_PAY_DATE
+        FROM
+            HITACHI_SERVE_FEE SF
+        WHERE SF.SHOW_YN = 'N' AND SF.UUID = #{uuid}
     </select>
 
-    <update id="updateServiceFee" parameterType="HitachiServiceFeeEntity">
+
+    <update id="updateServiceFeeChild" parameterType="HitachiServiceFeeEntity">
         UPDATE HITACHI_SERVE_FEE SF
-            SET CONTRACT_NO = #{contract_no},
-            CONTRACT_BUYER = #{contract_buyer},
-            USE_COMPANY = #{use_company},
-            COMPANY_NAME = #{company_name},
+        SET COMPANY_NAME = #{company_name},
             SERVE_FEE_CASH = #{serve_fee_cash},
-            CONTRACT_LOAN_TOTAL = #{contract_loan_total},
-            SEND_COMPANY_DATE = #{send_company_date},
-            GET_CONFIRM_DATE = #{get_confirm_date},
-            PERSON_LIABLE = #{person_liable},
             FIRST_PAY_FEE = #{first_pay_fee},
             FIRST_PAY_DATE = #{first_pay_date},
-            IS_THREE_CONTRACT = #{is_three_contract},
             SECOND_PAY_FEE = #{second_pay_fee},
             SECOND_PAY_DATE = #{second_pay_date},
             THIRD_PAY_FEE = #{third_pay_fee},
@@ -191,11 +277,40 @@
             FOUR_PAY_DATE = #{four_pay_date},
             FIVE_PAY_FEE = #{five_pay_fee},
             FIVE_PAY_DATE = #{five_pay_date},
-            UPDATE_DATE = NOW(),
-            NOTE = #{note}
+            UPDATE_DATE = NOW()
         WHERE SF.UUID = #{uuid}
     </update>
 
 
+    <select id="getServeFeeByContractNO" resultType="java.lang.Integer">
+        SELECT COUNT(FC.CONTRACT_NO) COUNT FROM HITACHI_SERVE_FEE_COMMON FC WHERE FC.CONTRACT_NO = #{contract_no}
+    </select>
 
+
+    <update id="deleteServiceFeeChild" parameterType="java.util.List">
+        UPDATE HITACHI_SERVE_FEE SF SET SHOW_YN = 'Y' WHERE
+        <if test='type=="parent"'>
+            CONTRACT_NO  IN
+        </if>
+        <if test='type=="" '>
+             UUID IN
+        </if>
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+
+    </update>
+
+
+    <select id="getServeFeeChildList" parameterType="java.util.List" resultType="java.lang.String">
+        SELECT
+          SC.CONTRACT_NO
+        FROM
+          HITACHI_SERVE_FEE_COMMON SC
+        WHERE SC.UUID IN
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+
+    </select>
 </mapper>

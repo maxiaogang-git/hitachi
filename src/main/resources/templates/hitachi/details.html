@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../static/layui/css/layui.css">
+    <script src="../../static/jquery-3.4.1/jquery-3.4.1.js"></script>
+    <script src="../../static/layui/layui.js"></script>
+    <title>查看服务费</title>
+    <style>
+        form {
+            padding: 15px 15px;
+        }
+
+       .custom_lanel{
+           position: relative;
+           margin-top: -10px;
+       }
+
+        .tr_bj_color {
+            background-color: #f0f0f0;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="add_container">
+    <form class="layui-form" id="form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">合同编号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="contract_no" class="layui-input" readonly th:value="${resMap.obj !=null}?${resMap.obj.contractNo}">
+            </div>
+
+            <label class="layui-form-label">合同买方</label>
+            <div class="layui-input-inline">
+                <input type="text" name="contract_buyer" class="layui-input" readonly th:value="${resMap.obj !=null}?${resMap.obj.contractBuyer}">
+            </div>
+
+            <label class="layui-form-label">使用单位</label>
+            <div class="layui-input-inline">
+                <input type="text" name="use_company" class="layui-input" readonly th:value="${resMap.obj !=null}?${resMap.obj.useCompany}">
+            </div>
+
+            <label class="layui-form-label">责任人</label>
+            <div class="layui-input-inline">
+                <input type="text" name="person_liable" class="layui-input" readonly th:value="${resMap.obj !=null}?${resMap.obj.personLiable}">
+            </div>
+
+        </div>
+
+        <div class="layui-form-item">
+            <label class="custom_lanel layui-form-label">寄总公司<br/>日期</label>
+            <div class="layui-input-inline">
+                <input type="text" name="send_company_date" class="layui-input" readonly="true" th:value="${resMap.obj !=null}?${resMap.obj.sendCompanyDate}">
+            </div>
+
+            <label class="custom_lanel layui-form-label">收到确认书日期</label>
+            <div class="layui-input-inline">
+                <input type="text" name="get_confirm_date" class="layui-input" readonly="true" th:value="${resMap.obj !=null}?${resMap.obj.getConfirmDate}">
+            </div>
+
+            <label class="custom_lanel layui-form-label">合同货款<br/>总额</label>
+            <div class="layui-input-inline">
+                <input type="text" name="contract_loan_total" class="layui-input" readonly th:value="${resMap.obj !=null}?${resMap.obj.contractLoanTotal}">
+            </div>
+
+            <label class="layui-form-label"></label>
+            <div class="layui-input-inline">
+                <input type="checkbox" name="is_three_contract" title="是否三方合同" disabled th:checked="${(resMap.obj != null and resMap.obj.isThreeContract=='1') or resMap.obj==null}">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <textarea name="note" class="layui-textarea" style="min-height: 10px" readonly th:text="${resMap.obj!=null}?${resMap.obj.note}"></textarea>
+                </div>
+            </div>
+
+            <div>
+                <table class="layui-table" id="setvice_fee_table_two" lay-filter="service_fee_table_filter_two"></table>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/html" id="barDemoChild">
+    <a class="layui-btn layui-btn-xs" lay-event="editChild">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delChild">删除</a>
+</script>
+
+<script th:inline="javascript">
+    $(function () {
+        layui.use(['table', 'element', 'layer'], function () {
+            var table = layui.table;
+            var layer = layui.layer;
+
+            //方法级渲染
+            table.render({
+                elem: '#setvice_fee_table_two'
+                , data: [[${resMap.data}]]
+                , title: '服务费数据表'
+                , cols: [[
+                    {checkbox: true, fixed: true}
+                    , {title: '序号', width: 50, fixed: true, type: 'numbers'}
+                    , {field: 'companyName', title: '公司名称', width: 120}
+                    , {field: 'serveFeeCash', title: '服务费金额', width: 125, sort: true}
+                    , {field: 'firstPayFee', title: '第一笔支付金额', width: 130}
+                    , {field: 'firstPayDate', title: '第一笔支付时间', width: 155, sort: true}
+                    , {field: 'secondPayFee', title: '第二笔支付金额', width: 130}
+                    , {field: 'secondPayDate', title: '第二笔支付时间',width: 155, sort: true}
+                    , {field: 'thirdPayFee', title: '第三笔支付金额', width: 130}
+                    , {field: 'thirdPayDate', title: '第三笔支付时间',width: 155, sort: true}
+                    , {field: 'fourPayFee', title: '第四笔支付金额', width: 130}
+                    , {field: 'fourPayDate', title: '第四笔支付时间',width: 155, sort: true}
+                    , {field: 'fivePayFee', title: '第五笔支付金额', width: 130}
+                    , {field: 'fivePayDate', title: '第五笔支付时间',width: 155,sort: true}
+                    , {field: 'wealth', title: '操作', width: 120, align: 'center', toolbar: '#barDemoChild'}
+                ]
+                ],
+
+                //返回数据解析
+                parseData: function (res) {
+                    return {
+                        "code": 0, //解析接口状态
+                        "count": res.count,
+                        "data": res.data//解析数据列表
+                    }
+                }
+                //设置参数
+                , request: {
+                    pageName: 'currNo', //页码的参数名称，默认：page
+                    limitName: 'currSize' //每页数据量的参数名，默认：limit
+
+                }
+                , id: 'service_fee_reload_two'
+                , page: true
+                , limit: 10
+                , limits: [10, 20, 30, 50, 80, 100]
+                , height: 330
+            });
+
+
+            //选中checkbox改变背景色
+            table.on('checkbox(service_fee_table_filter_two)', function (obj) {
+                //全选时
+                if (obj.type == "all") {
+                    if (obj.checked) {//全选中
+                        var checkStatus = table.checkStatus('service_fee_reload_two');
+                        var sdata = checkStatus.data;
+                        if (sdata.length > 0) {//渲染背景颜色
+                            $(".layui-table-body .layui-table tr").each(function () {
+                                $(this).addClass("tr_bj_color");
+                            })
+                        }
+                    }
+                    else {//全部不选
+                        $(".layui-table-body .layui-table tr").each(function () {
+                            $(this).removeClass("tr_bj_color");
+                        })
+                    }
+                }
+                else {//单选
+                    var checkStatus = table.checkStatus('service_fee_reload_two');
+                    var sdata = checkStatus.data;
+                    if (obj.checked) {//选中
+                        obj.tr.addClass('tr_bj_color');
+                    }
+                    else {//取消选中
+                        obj.tr.removeClass('tr_bj_color');
+                    }
+                }
+            });
+
+            //监听工具条
+            table.on('tool(service_fee_table_filter_two)', function (obj) {
+                var data = obj.data;
+                if (obj.event === 'delChild') {
+                    layer.confirm('确认要删除?', function (index) {
+                        var delData = [];
+                        delData.push(data.uuid);
+                        $.ajax({
+                            type: 'post',
+                            url: '/deleteServiceFeeChild',
+                            contentType: "application/json;charset=UTF-8",
+                            data: JSON.stringify(delData),
+                            dataType: "json",
+                            success: function () {
+                                layer.msg('删除成功！', {anim: 6, time: 2000}, function () {
+                                    layer.close(index);
+                                    window.location.reload();
+                                });
+                            },
+                            error: function (e) {
+                            }
+
+                        });
+
+                    });
+                } else if (obj.event === 'editChild') {
+                    var uuid = data.uuid;
+                    layer.open({
+                        type: 2,
+                        content: '/editServiceFeeChildBefore/' + '?uuid=' + uuid,
+                        area: ['700px', '550px'],
+                        title: '修改服务费'
+                    })
+                }
+            });
+        });
+
+    });
+
+</script>
+</body>
+</html>

@@ -42,7 +42,7 @@ public class LoginController {
             }else{
                 session.setAttribute("loginUser", username);
                 model.addAttribute( "user",user);
-                return "redirect:hitachi/list.html";
+                return "redirect:hitachi/list1.html";
             }
         } else {
             model.addAttribute("msg", "用户名密码不能为空");

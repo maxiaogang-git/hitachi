@@ -27,25 +27,7 @@
 
         <input type="hidden" name="_method" value="put" th:if="${data!=null}">
         <input type="hidden" name="uuid" th:value="${data!=null}?${data.uuid}">
-        <div class="layui-form-item">
-            <label class="layui-form-label">合同编号</label>
-            <div class="layui-input-inline">
-                <input type="text" name="contract_no" required lay-verify="required" placeholder="请输入合同编号" autocomplete="off"
-                       class="layui-input" maxlength="50" th:value="${data !=null}?${data.contractNo}" th:readonly="${data !=null}">
-            </div>
-
-            <label class="layui-form-label">合同买方</label>
-            <div class="layui-input-inline">
-                <input type="text" name="contract_buyer" placeholder="请输入合同买方"
-                       autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.contractBuyer}" th:readonly="${data !=null}">
-            </div>
-
-            <label class="layui-form-label">使用单位</label>
-            <div class="layui-input-inline">
-                <input type="text" name="use_company" placeholder="请输入使用单位"
-                       autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.useCompany}" th:readonly="${data !=null}">
-            </div>
-        </div>
+        <input type="hidden" name="contract_no" th:value="${data!=null}?${data.contractNo}">
 
         <div class="layui-form-item">
             <label class="layui-form-label">公司名称</label>
@@ -59,42 +41,6 @@
                 <input type="text" name="serve_fee_cash" placeholder="请输入服务费金额"
                        autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.serveFeeCash}">
             </div>
-
-
-
-            <label class="layui-form-label">责任人</label>
-            <div class="layui-input-inline">
-                <!--<select name="person_liable" lay-verify="required">-->
-                <!--<option value=""></option>-->
-                <!--<option value="0">张三</option>-->
-                <!--<option value="1">李四</option>-->
-                <!--<option value="2">王五</option>-->
-                <!--<option value="3">赵六</option>-->
-                <!--</select>-->
-                <input type="text" name="person_liable" placeholder="请输入责任人"
-                       autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.personLiable}" th:readonly="${data !=null}">
-            </div>
-
-
-        </div>
-
-        <div class="layui-form-item">
-            <label class="custom_lanel layui-form-label">寄总公司<br/>日期</label>
-            <div class="layui-input-inline">
-                <input type="text" autocomplete="off" name="send_company_date" class="add_date layui-input" placeholder="请选择日期" readonly="true" th:value="${data !=null}?${data.sendCompanyDate}" th:disabled="${data !=null}">
-            </div>
-
-            <label class="custom_lanel layui-form-label">收到确认书日期</label>
-            <div class="layui-input-inline">
-                <input type="text" autocomplete="off" name="get_confirm_date" class="add_date layui-input" placeholder="请选择日期" readonly="true" th:value="${data !=null}?${data.getConfirmDate}" th:disabled="${data !=null}">
-            </div>
-
-            <label class="custom_lanel layui-form-label">合同货款<br/>总额</label>
-            <div class="layui-input-inline">
-                <input type="text" name="contract_loan_total" placeholder="请输入合同货款总额"
-                       autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.contractLoanTotal}" th:readonly="${data !=null}">
-            </div>
-
         </div>
 
         <div class="layui-form-item">
@@ -106,11 +52,6 @@
             <label class="custom_lanel layui-form-label">第一笔支付<br/>时间</label>
             <div class="layui-input-inline">
                 <input type="text" name ="first_pay_date" autocomplete="off" class="add_date layui-input" placeholder="请选择日期" readonly="true" th:value="${data !=null}?${data.firstPayDate}">
-            </div>
-
-            <label class="layui-form-label"></label>
-            <div class="layui-input-inline">
-                <input type="checkbox" name="is_three_contract" title="是否三方合同" value="1" checked = "checked" th:checked="${(data != null and data.isThreeContract=='1') or data==null}" th:disabled="${data !=null}" >
             </div>
 
         </div>
@@ -167,18 +108,11 @@
 
 
         <div class="layui-form-item">
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">备注</label>
-                <div class="layui-input-block">
-                    <textarea name="note" placeholder="请输入内容" class="layui-textarea" maxlength="200" th:text="${data!=null}?${data.note}" th:readonly="${data !=null}"></textarea>
-                </div>
-            </div>
 
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn layui-btn-primary" id="cancel">取消</button>
-                    <!--<button class="layui-btn" lay-submit lay-filter="formDemo" th:text="${data!=null}?'修改':'增加'">增加</button>-->
-                    <button class="layui-btn" lay-submit lay-filter="formDemo">增加</button>
+                    <button class="layui-btn" lay-submit lay-filter="formDemoTwo" th:text="${data!=null}?'修改':'增加'">增加</button>
                 </div>
             </div>
         </div>
@@ -190,12 +124,12 @@
         var form = layui.form, laydate = layui.laydate, layer = layui.layer;
 
         //监听提交
-        form.on('submit(formDemo)', function (data) {
+        form.on('submit(formDemoTwo)', function (data) {
             var datas = data.field;
             var type = datas._method;
-            if(type == 'put1'){
+            if(type == 'put'){
                 $.ajax({
-                    url:"/addServiceFee",
+                    url:"/addServiceFeeChild",
                     data: datas,
                     type: 'put',
                     dataType: "json",
@@ -203,9 +137,9 @@
                         if (msg === 1) {
                             layer.msg('修改成功', {
                                 anim:6,
-                                time: 2000
+                                time: 1000
                             },function () {
-                                parent.layui.table.reload('service_fee_reload');
+                                window.parent.location.reload();
                                 //先得到当前iframe层的索引
                                 var index = parent.layer.getFrameIndex(window.name);
                                 parent.layer.close(index);
@@ -235,11 +169,6 @@
                                 var index = parent.layer.getFrameIndex(window.name);
                                 parent.layer.close(index);
                             });
-                        }else{
-                            layer.msg('合同号存在，请重新输入', {
-                                anim:6,
-                                time: 2000
-                            })
                         }
                     },
                     error: function (error) {
@@ -254,7 +183,7 @@
         lay('.add_date').each(function () {
             laydate.render({
                 elem: this,
-                format:'yyyy/M/d',
+                format:'yyyy/MM/dd',
                 trigger: 'click'//呼出事件改成click
             });
         });
