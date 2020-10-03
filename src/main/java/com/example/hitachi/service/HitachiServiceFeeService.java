@@ -42,23 +42,18 @@ public class HitachiServiceFeeService {
     }
 
     public int addServiceFee(Map<String,Object> params){
-        String type = (String)params.get("_method");
         String uuid= UUID.randomUUID().toString();
         params.put("uuid",uuid);
         Object obj = params.get("is_three_contract");
         if(obj == null){
             params.put("is_three_contract","0");
         }
-        if(type==null || "".equals("type")){
-            int count = hitachiServiceFeeMapper.getServeFeeByContractNO(params);
-            if(count>0){
-                return -1;
-            }
-            hitachiServiceFeeMapper.addServiceFee(params);
-            return hitachiServiceFeeMapper.addServiceFeeChild(params);
-        }else{
-            return hitachiServiceFeeMapper.addServiceFeeChild(params);
+        int count = hitachiServiceFeeMapper.getServeFeeByContractNO(params);
+        if(count>0){
+            return -1;
         }
+        return hitachiServiceFeeMapper.addServiceFee(params);
+//        return hitachiServiceFeeMapper.addServiceFeeChild(params);
     }
 
 
@@ -109,7 +104,18 @@ public class HitachiServiceFeeService {
 
 
     /**
-     * 修改西面table信息
+     * 增加子table信息
+     * @param params
+     * @return
+     */
+    public int addServiceFeeChild(Map<String,Object> params){
+        String uuid= UUID.randomUUID().toString();
+        params.put("uuid",uuid);
+        return hitachiServiceFeeMapper.addServiceFeeChild(params);
+    }
+
+    /**
+     * 修改子table信息
      * @param params
      * @return
      */

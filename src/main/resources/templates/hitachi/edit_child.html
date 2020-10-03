@@ -27,7 +27,8 @@
 
         <input type="hidden" name="_method" value="put" th:if="${data!=null}">
         <input type="hidden" name="uuid" th:value="${data!=null}?${data.uuid}">
-        <input type="hidden" name="contract_no" th:value="${data!=null}?${data.contractNo}">
+        <input type="hidden" name="contract_no" th:value="${data!=null}?${data.contractNo}:${contractNo}">
+        <input type="hidden" name="is_three_contract" th:value="${data == null}?${is_three_contract}">
 
         <div class="layui-form-item">
             <label class="layui-form-label">公司名称</label>
@@ -38,7 +39,7 @@
 
             <label class="layui-form-label">服务费金额</label>
             <div class="layui-input-inline">
-                <input type="text" name="serve_fee_cash" placeholder="请输入服务费金额"
+                <input type="number" name="serve_fee_cash" placeholder="请输入服务费金额"
                        autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.serveFeeCash}">
             </div>
         </div>
@@ -46,7 +47,7 @@
         <div class="layui-form-item">
             <label class="custom_lanel layui-form-label">第一笔支付<br/>金额</label>
             <div class="layui-input-inline">
-                <input type="text" name="first_pay_fee" placeholder="请输入第一笔支付金额" autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.firstPayFee}">
+                <input type="number" name="first_pay_fee" placeholder="请输入第一笔支付金额" autocomplete="off" class="layui-input" maxlength="50" th:value="${data !=null}?${data.firstPayFee}">
             </div>
 
             <label class="custom_lanel layui-form-label">第一笔支付<br/>时间</label>
@@ -59,7 +60,7 @@
         <div class="layui-form-item">
             <label class="custom_lanel layui-form-label">第二笔支付<br/>金额</label>
             <div class="layui-input-inline">
-                <input type="text" name="second_pay_fee" placeholder="请输入第二笔支付金额"
+                <input type="number" name="second_pay_fee" placeholder="请输入第二笔支付金额"
                        autocomplete="off" class="layui-input" maxlength="50" th:value="${data!=null}?${data.secondPayFee}">
             </div>
 
@@ -73,7 +74,7 @@
         <div class="layui-form-item">
             <label class="custom_lanel layui-form-label">第三笔支付<br/>金额</label>
             <div class="layui-input-inline" maxlength="50">
-                <input type="text" name="third_pay_fee" placeholder="请输入第三笔支付金额" autocomplete="off" class="layui-input" th:value="${data!=null}?${data.thirdPayFee}">
+                <input type="number" name="third_pay_fee" placeholder="请输入第三笔支付金额" autocomplete="off" class="layui-input" th:value="${data!=null}?${data.thirdPayFee}">
             </div>
 
             <label class="custom_lanel layui-form-label">第三笔支付<br/>时间</label>
@@ -85,7 +86,7 @@
         <div class="layui-form-item">
             <label class="custom_lanel layui-form-label">第四笔支付<br/>金额</label>
             <div class="layui-input-inline" maxlength="50">
-                <input type="text" name="four_pay_fee" placeholder="请输入第四笔支付金额" autocomplete="off" class="layui-input" th:value="${data!=null}?${data.fourPayFee}">
+                <input type="number" name="four_pay_fee" placeholder="请输入第四笔支付金额" autocomplete="off" class="layui-input" th:value="${data!=null}?${data.fourPayFee}">
             </div>
 
             <label class="custom_lanel layui-form-label">第四笔支付<br/>时间</label>
@@ -97,7 +98,7 @@
         <div class="layui-form-item">
             <label class="custom_lanel layui-form-label">第五笔支付<br/>金额</label>
             <div class="layui-input-inline" maxlength="50">
-                <input type="text" name="five_pay_fee" placeholder="请输入第五笔支付金额" autocomplete="off" class="layui-input" th:value="${data!=null}?${data.fivePayFee}">
+                <input type="number" name="five_pay_fee" placeholder="请输入第五笔支付金额" autocomplete="off" class="layui-input" th:value="${data!=null}?${data.fivePayFee}">
             </div>
 
             <label class="custom_lanel layui-form-label">第五笔支付<br/>时间</label>
@@ -154,17 +155,17 @@
 
             }else{
                 $.ajax({
-                    url:"/addServiceFee",
+                    url:"/addServiceFeeChild",
                     data: datas,
                     type: 'post',
                     dataType: "json",
-                    success: function (msg,res) {
+                    success: function (msg) {
                         if (msg === 1) {
                             layer.msg('增加成功', {
                                 anim:6,
-                                time: 2000
+                                time: 1000
                             },function () {
-                                parent.layui.table.reload('service_fee_reload');
+                                window.parent.location.reload();
                                 //先得到当前iframe层的索引
                                 var index = parent.layer.getFrameIndex(window.name);
                                 parent.layer.close(index);

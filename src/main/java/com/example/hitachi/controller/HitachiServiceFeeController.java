@@ -24,10 +24,8 @@ public class HitachiServiceFeeController {
      * @return
      */
     @GetMapping(value = "/addServiceFeeBefore")
-    public String addServiceFeeBefore(@RequestParam(name = "uuid",defaultValue = "") String uuid,Model model){
-        HitachiServiceFeeEntity obj = hitachiServiceFeeService.getServiceFeeDataByKey(uuid);
-        model.addAttribute("data",obj);
-        return "hitachi/add";
+    public String addServiceFeeBefore(){
+        return "hitachi/add_parent";
     }
 
 
@@ -147,10 +145,26 @@ public class HitachiServiceFeeController {
      * @return
      */
     @GetMapping(value = "/editServiceFeeChildBefore")
-    public String editServiceFeeChildBefore(@RequestParam(name = "uuid") String uuid,Model model){
+    public String editServiceFeeChildBefore(@RequestParam(name = "uuid", defaultValue = "") String uuid,
+                                            @RequestParam(name = "contractNo",defaultValue = "") String contractNo,
+                                            @RequestParam(name = "is_three_contract",defaultValue = "")String is_three_contract, Model model){
         HitachiServiceFeeEntity obj = hitachiServiceFeeService.getServiceFeeChildDataByKey(uuid);
         model.addAttribute("data",obj);
+        model.addAttribute("contractNo",contractNo);
+        model.addAttribute("is_three_contract",is_three_contract);
         return "hitachi/edit_child";
+    }
+
+    /**
+     * 增加下面table信息
+     * @param params
+     * @return
+     */
+    @PostMapping(value = "/addServiceFeeChild")
+    @ResponseBody
+    public int addServiceFeeChild(@RequestParam Map<String ,Object> params){
+        return hitachiServiceFeeService.addServiceFeeChild(params);
+
     }
 
     /**

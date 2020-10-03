@@ -103,7 +103,7 @@
                 #{send_company_date},
                 #{get_confirm_date},
                 'N',
-                NOW(),
+                CURDATE(),
                 #{note})
     </insert>
 
@@ -148,7 +148,7 @@
             #{four_pay_date},
             #{five_pay_fee},
             #{five_pay_date},
-            NOW(),
+            CURDATE(),
             'N')
 
     </insert>
@@ -191,7 +191,7 @@
             GET_CONFIRM_DATE = #{get_confirm_date},
             CONTRACT_LOAN_TOTAL = #{contract_loan_total},
             IS_THREE_CONTRACT = #{is_three_contract},
-            UPDATE_DATE = NOW(),
+            UPDATE_DATE = CURDATE(),
             NOTE = #{note}
         WHERE SF.UUID = #{uuid}
     </update>
@@ -232,7 +232,7 @@
             AND SF.CONTRACT_NO = #{contract_no}
         </if>
 
-        ORDER BY SF.GET_CONFIRM_DATE DESC
+        ORDER BY SF.FIRST_PAY_DATE DESC
 
     </sql>
 
@@ -277,7 +277,7 @@
             FOUR_PAY_DATE = #{four_pay_date},
             FIVE_PAY_FEE = #{five_pay_fee},
             FIVE_PAY_DATE = #{five_pay_date},
-            UPDATE_DATE = NOW()
+            UPDATE_DATE = CURDATE()
         WHERE SF.UUID = #{uuid}
     </update>
 

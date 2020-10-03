@@ -263,7 +263,7 @@
                     layer.open({
                         type: 2,
                         content: '/getServiceFeeInfoChild/' + '?contractNo=' + contractNo + '&uuid=' + uuid,
-                        area: ['1400px', '630px'],
+                        area: ['1400px', '670px'],
                         title: '查看服务费'
                     })
 
@@ -352,29 +352,13 @@
                 }
                 //增加
                 , add: function () {
-                    var checkStatus = table.checkStatus('service_fee_reload')
-                    var obj = checkStatus.data;
-                    if(obj.length>1){
-                        layer.msg('请选择一条信息进行添加！', {anim: 6, time: 2000});
-                        return false;
-                    }
-                    if(obj.length==1){
-                        layer.open({
-                            type: 2,
-                            content: '/addServiceFeeBefore?uuid='+obj[0].uuid,
-                            area: ['1100px', '700px'],
-                            title: '增加服务费'
+                    layer.open({
+                        type: 2,
+                        content: '/addServiceFeeBefore',
+                        area: ['1000px', '450px'],
+                        title: '增加服务费'
 
-                        })
-                    }else{
-                        layer.open({
-                            type: 2,
-                            content: '/addServiceFeeBefore',
-                            area: ['1100px', '700px'],
-                            title: '增加服务费'
-
-                        })
-                    }
+                    })
                 }
 
                 //搜索重加载
