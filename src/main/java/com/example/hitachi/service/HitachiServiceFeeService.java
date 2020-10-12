@@ -85,7 +85,8 @@ public class HitachiServiceFeeService {
             params.put("is_three_contract","1");
         }
         hitachiServiceFeeMapper.updateServiceFee(params);
-        return hitachiServiceFeeMapper.updateChildByParent(params);
+        hitachiServiceFeeMapper.updateChildByParent(params);
+        return 1;
     }
 
 
