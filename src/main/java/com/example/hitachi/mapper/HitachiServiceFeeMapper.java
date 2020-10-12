@@ -25,6 +25,8 @@ public interface HitachiServiceFeeMapper {
 
     int updateServiceFee(Map<String,Object> params);
 
+    int updateChildByParent(Map<String,Object> params);
+
 
     List<HitachiServiceFeeEntity> getServiceFeeInfoChild(Map<String,Object> params);
 
@@ -41,5 +43,9 @@ public interface HitachiServiceFeeMapper {
     int deleteServiceFeeChild(@Param(value="list")List<String> list,@Param(value="type") String type);
 
     List<String> getServeFeeChildList(List<String> list);
+
+    List<HitachiServiceFeeEntity> getExportData();
+
+    List<HitachiServiceFeeEntity> getExportChildData();
 
 }

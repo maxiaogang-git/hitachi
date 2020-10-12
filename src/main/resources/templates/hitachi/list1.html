@@ -129,9 +129,9 @@
                 <button class="layui-btn layui-btn-sm" id="batchDelete" data-type="batchDelData">
                     <i class="layui-icon layui-icon-delete">删除</i>
                 </button>
-                <!--<button class="layui-btn layui-btn-sm" id="excelDown" data-type="excelDown">-->
-                <!--<i class="layui-icon layui-icon-export"></i>EXCEL下载-->
-                <!--</button>-->
+                <button class="layui-btn layui-btn-sm" id="excelDown" data-type="excelDown">
+                    <i class="layui-icon layui-icon-download-circle">Excel下载</i>
+                </button>
             </div>
 
             <div>
@@ -394,7 +394,7 @@
                     location.reload();
                 }
                 , excelDown: function () {
-                    alert('aaa');
+                    window.location = '/exportData'
                 }
             };
 
@@ -423,16 +423,6 @@
         });
 
     });
-</script>
-
-<script>
-
-    var currentModel = "这是标题";
-
-    function GetValue() {
-        return currentModel;//还可以传递对象
-    }
-
 </script>
 
 </body>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -145,13 +146,9 @@ public class HitachiServiceFeeController {
      * @return
      */
     @GetMapping(value = "/editServiceFeeChildBefore")
-    public String editServiceFeeChildBefore(@RequestParam(name = "uuid", defaultValue = "") String uuid,
-                                            @RequestParam(name = "contractNo",defaultValue = "") String contractNo,
-                                            @RequestParam(name = "is_three_contract",defaultValue = "")String is_three_contract, Model model){
+    public String editServiceFeeChildBefore(@RequestParam(name = "uuid", defaultValue = "") String uuid,Model model){
         HitachiServiceFeeEntity obj = hitachiServiceFeeService.getServiceFeeChildDataByKey(uuid);
         model.addAttribute("data",obj);
-        model.addAttribute("contractNo",contractNo);
-        model.addAttribute("is_three_contract",is_three_contract);
         return "hitachi/edit_child";
     }
 
@@ -191,4 +188,12 @@ public class HitachiServiceFeeController {
         return hitachiServiceFeeService.deleteServiceFeeChild(list);
     }
 
+    /**
+     * EXCEL下载
+     * @throws Exception
+     */
+    @GetMapping("/exportData")
+    public void exportData(HttpServletResponse response) throws Exception{
+        hitachiServiceFeeService.exportData(response);
+    }
 }

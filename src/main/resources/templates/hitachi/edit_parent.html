@@ -75,7 +75,7 @@
 
             <label class="layui-form-label"></label>
             <div class="layui-input-inline">
-                <input type="checkbox" name="is_three_contract" title="是否三方合同" value="1" checked = "checked" th:checked="${(data != null and data.isThreeContract=='1') or data==null}">
+                <input type="checkbox" name="is_three_contract" title="是否三方合同"  th:checked="${(data != null and data.isThreeContract=='1')}">
             </div>
         </div>
 
@@ -112,7 +112,7 @@
                     type: 'put',
                     dataType: "json",
                     success: function (msg) {
-                        if (msg === 1) {
+                        if (msg !== 0) {
                             layer.msg('修改成功', {
                                 anim:6,
                                 time: 1000
