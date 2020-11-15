@@ -169,6 +169,8 @@
             SF.UUID,
             SF.CONTRACT_NO,
             SF.CONTRACT_BUYER,
+            SF.COMPANY_NAME,
+            SF.SERVE_FEE_CASH,
             SF.USE_COMPANY,
             SF.PERSON_LIABLE,
             SF.SEND_COMPANY_DATE,
@@ -183,8 +185,7 @@
 
     <update id="updateServiceFee" parameterType="HitachiServiceFeeEntity">
         UPDATE HITACHI_SERVE_FEE_COMMON SF
-            SET CONTRACT_NO = #{contract_no},
-            CONTRACT_BUYER = #{contract_buyer},
+            SET CONTRACT_BUYER = #{contract_buyer},
             USE_COMPANY = #{use_company},
             PERSON_LIABLE = #{person_liable},
             SEND_COMPANY_DATE = #{send_company_date},
@@ -327,18 +328,23 @@
 
     <select id="getExportData" resultType="com.example.hitachi.entity.HitachiServiceFeeEntity">
         SELECT
-            SF.CONTRACT_NO,
-            SF.CONTRACT_BUYER,
-            SF.USE_COMPANY,
-            SF.PERSON_LIABLE,
-            SF.SEND_COMPANY_DATE,
+            CO.CONTRACT_NO,
+            CO.CONTRACT_BUYER,
+            CO.USE_COMPANY,
+            CO.CONTRACT_LOAN_TOTAL,
+            CO.PERSON_LIABLE,
+            IF(CO.IS_THREE_CONTRACT = 0,'False','True') IS_THREE_CONTRACT,
+            SF.COMPANY_NAME,
+            SF.SERVE_FEE_CASH,
+            CO.SEND_COMPANY_DATE,
             SF.GET_CONFIRM_DATE,
-            SF.CONTRACT_LOAN_TOTAL,
-            IF(SF.IS_THREE_CONTRACT = 0,'False','True') IS_THREE_CONTRACT,
             NOTE
         FROM
-            HITACHI_SERVE_FEE_COMMON SF
+            HITACHI_SERVE_FEE_COMMON CO,
+            HITACHI_SERVE_FEE SF
         WHERE SF.SHOW_YN = 'N'
+              AND SF.GET_CONFIRM_DATE IS NULL
+              AND CO.CONTRACT_NO = SF.CONTRACT_NO
     </select>
 
     <select id="getExportChildData" resultType="com.example.hitachi.entity.HitachiServiceFeeEntity">
@@ -358,10 +364,11 @@
             SF.FOUR_PAY_FEE,
             SF.FOUR_PAY_DATE,
             SF.FIVE_PAY_FEE,
-            SF.FIVE_PAY_DATE
+            SF.FIVE_PAY_DATE,
+            SF.GET_CONFIRM_DATE
         FROM
             HITACHI_SERVE_FEE SF
         WHERE
-            SF.SHOW_YN = 'N'
+            SF.SHOW_YN = 'N' and SF.GET_CONFIRM_DATE IS NOT NULL
     </select>
 </mapper>

@@ -278,7 +278,7 @@
                             data: JSON.stringify(delData),
                             dataType: 'text',
                             success: function (result) {
-                                layer.msg('删除成功！', {anim: 6, time: 2000}, function () {
+                                layer.msg('删除成功', {anim: 6, time: 2000}, function () {
                                     layer.close(index);
                                     parent.layui.table.reload('service_fee_reload');
                                 });
@@ -323,7 +323,7 @@
                                 data: list,
                                 dataType: 'text',
                                 success: function (result) {
-                                    layer.msg('删除成功！', {anim: 6, time: 2000}, function () {
+                                    layer.msg('删除成功', {anim: 6, time: 2000}, function () {
                                         layer.close(index);
                                         parent.layui.table.reload('service_fee_reload');
 
@@ -355,7 +355,7 @@
                     layer.open({
                         type: 2,
                         content: '/addServiceFeeBefore',
-                        area: ['1000px', '450px'],
+                        area: ['1200px', '450px'],
                         title: '增加服务费'
 
                     })

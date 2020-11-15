@@ -58,8 +58,8 @@ public class HitachiServiceFeeService {
         if(count>0){
             return -1;
         }
-        return hitachiServiceFeeMapper.addServiceFee(params);
-//        return hitachiServiceFeeMapper.addServiceFeeChild(params);
+        hitachiServiceFeeMapper.addServiceFee(params);
+        return hitachiServiceFeeMapper.addServiceFeeChild(params);
     }
 
 
@@ -153,7 +153,7 @@ public class HitachiServiceFeeService {
      */
     public void exportData(HttpServletResponse response) throws Exception{
         XSSFWorkbook workbook = new XSSFWorkbook();
-        String columNames[] = {"合同编号","合同买方","使用单位","责任人","寄总公司日期","收到确认书日期","合同货款总额","是否三方合同","备注"};
+        String columNames[] = {"合同编号","合同买方","使用单位","合同货款总额","责任人","是否三方合同","公司名称","服务费金额","寄总公司日期","收到确认书日期","备注"};
         String columNames2[] = {"合同编号","合同买方","合同货款总额","是否三方合同","公司名称","服务费金额","第一笔支付金额","第一笔支付时间","第二笔支付金额","第二笔支付时间","第三笔支付金额","第三笔支付时间","第四笔支付金额","第四笔支付时间","第五笔支付金额","第五笔支付时间","收到确认书日期"};
         Sheet sheet = workbook.createSheet("服务费");
         Sheet sheet2 = workbook.createSheet("服务费支付");
@@ -196,17 +196,19 @@ public class HitachiServiceFeeService {
             dataRow.createCell(0).setCellValue(obj.getContractNo());
             dataRow.createCell(1).setCellValue(obj.getContractBuyer());
             dataRow.createCell(2).setCellValue(obj.getUseCompany());
-            dataRow.createCell(3).setCellValue(obj.getPersonLiable());
-            dataRow.createCell(4).setCellValue(obj.getSendCompanyDate());
-            dataRow.createCell(5).setCellValue(obj.getGetConfirmDate());
             String contractLoanTotal = obj.getContractLoanTotal();
             if("".equals(contractLoanTotal) || contractLoanTotal == null){
-                dataRow.createCell(6).setCellValue("");
+                dataRow.createCell(3).setCellValue("");
             }else{
-                dataRow.createCell(6).setCellValue(Double.parseDouble(obj.getContractLoanTotal()));
+                dataRow.createCell(3).setCellValue(Double.parseDouble(obj.getContractLoanTotal()));
             }
-            dataRow.createCell(7).setCellValue(obj.getIsThreeContract());
-            dataRow.createCell(8).setCellValue(obj.getNote());
+            dataRow.createCell(4).setCellValue(obj.getPersonLiable());
+            dataRow.createCell(5).setCellValue(obj.getIsThreeContract());
+            dataRow.createCell(6).setCellValue(obj.getCompanyName());
+            dataRow.createCell(7).setCellValue(obj.getServeFeeCash());
+            dataRow.createCell(8).setCellValue(obj.getSendCompanyDate());
+            dataRow.createCell(9).setCellValue(obj.getGetConfirmDate());
+            dataRow.createCell(10).setCellValue(obj.getNote());
         }
 
         for(int j=0;j<childListData.size();j++){
